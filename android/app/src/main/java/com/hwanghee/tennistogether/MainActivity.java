@@ -1,9 +1,13 @@
 package com.hwanghee.tennistogether;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
@@ -25,6 +29,12 @@ public class MainActivity extends AppCompatActivity {
 
         navList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, navItems));
         navList.setOnItemClickListener(new DrawerItemClickListener());
+
+        if(savedInstanceState == null) {
+            Fragment matchFinder = new MatchFinder();
+            FragmentManager fm = getSupportFragmentManager();
+            fm.beginTransaction().replace(R.id.main_container, matchFinder).commit();
+        }
     }
 }
 
