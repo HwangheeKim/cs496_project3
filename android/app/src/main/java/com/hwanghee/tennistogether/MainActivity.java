@@ -5,31 +5,19 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.text.Layout;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity
-        implements MatchFinder.OnFragmentInteractionListener, CourtFinder.OnFragmentInteractionListener {
+        implements GameFinder.OnFragmentInteractionListener, CourtFinder.OnFragmentInteractionListener {
 
     static int REQUEST_LOGIN = 0xabcd;
     static String userName = "Username";
@@ -46,7 +34,7 @@ public class MainActivity extends AppCompatActivity
 
         drawerLayout = (DrawerLayout)findViewById(R.id.main_drawer);
         navView = (NavigationView)findViewById(R.id.main_nav_list);
-        Fragment newFragment = new MatchFinder();
+        Fragment newFragment = new GameFinder();
 
         // Initial Screen
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container, newFragment).commit();
@@ -55,8 +43,8 @@ public class MainActivity extends AppCompatActivity
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 item.setChecked(true);
-                if(item.getItemId() == R.id.drawer_matchfinder) {
-                    Fragment newFragment = new MatchFinder();
+                if(item.getItemId() == R.id.drawer_gamefinder) {
+                    Fragment newFragment = new GameFinder();
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.main_container, newFragment).commit();
                 } else if(item.getItemId() == R.id.drawer_courtfinder) {

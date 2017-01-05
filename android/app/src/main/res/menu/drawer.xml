@@ -4,8 +4,8 @@
         android:checkableBehavior="single">
 
         <item
-            android:id="@+id/drawer_matchfinder"
-            android:title="Match Finder" />
+            android:id="@+id/drawer_gamefinder"
+            android:title="Game Finder" />
 
         <item
             android:id="@+id/drawer_courtfinder"
