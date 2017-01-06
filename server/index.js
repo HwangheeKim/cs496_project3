@@ -23,11 +23,14 @@ mongoose.connect('localhost', 'tennis');
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
-    userid : String,
+    userID : String,
     name : String,
+    picture : String,
+    email : String,
+    group : String,
     phone : String
 });
-var User = mongoose.model('user', userSchema);
+var User = mongoose.model('user', userSchema, 'user');
 
 var gameSchema = new Schema({
     type : Boolean,
@@ -41,17 +44,62 @@ var gameSchema = new Schema({
     isMatched : Boolean,
     score : String
 });
-var Game = mongoose.model('game', gameSchema);
+var Game = mongoose.model('game', gameSchema, 'game');
 
 var courtSchema = new Schema({
     name : String,
     info : String
 });
-var Court = mongoose.model('court', courtSchema);
+var Court = mongoose.model('court', courtSchema, 'court');
 
 
 
 /////////*    Server Implementation     */////////
+
+// Get rerquest for game information
+app.get('/game/all', function(req, res) {
+    Game.find({}, function(err, results) {
+        if (err) throw err;
+        
+        res.writeHead(200, {'Content-Type':'application/json'});
+        res.write(JSON.stringify(results));
+        res.end();
+    });
+});
+
+// GET request for specific user
+app.get('/user/:userID', function(req, res) {
+    console.log("[GET/user/:userID] Request on " + req.params.userID);
+    User.findOne({userID : req.params.userID}, function(err, result) {
+        if (err) throw err
+        res.writeHead(200, {'Content-Type' : 'application/json'});
+        res.write(JSON.stringify(result));
+        res.end();
+    });
+});
+
+// POST request for user enrollment
+app.post('/user/enroll', function(req, res) {
+    console.log("[User/enroll] Got request");
+    var newUser = {
+        userID : req.body['userID'],
+        name : req.body['name'],
+        picture : req.body['picture'],
+        email : req.body['email'],
+        group : req.body['group'],
+        phone : req.body['phone']
+    };
+
+    User.findOneAndUpdate( {userID : req.body['userID']}, newUser, {upsert: true, new: true}, function (err, res) {
+        if (err) throw err;
+        console.log("DONE PROCESS " + res)
+    });
+
+
+    res.writeHead(200, {'Content-Type':'application/json'});
+    res.write(JSON.stringify({result: 'OK'}));
+    res.end();
+});
 
 
 
