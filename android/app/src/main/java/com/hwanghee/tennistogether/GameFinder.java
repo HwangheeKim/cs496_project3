@@ -1,21 +1,43 @@
 package com.hwanghee.tennistogether;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.clans.fab.FloatingActionButton;
+
 public class GameFinder extends Fragment {
     private OnFragmentInteractionListener mListener;
+    private RecyclerView mRecyclerView;
+    private LinearLayoutManager mLinearLayoutManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_game_finder, container, false);
+        final View view = inflater.inflate(R.layout.fragment_game_finder, container, false);
+
+        mRecyclerView = (RecyclerView)view.findViewById(R.id.gamefinder_list);
+        mLinearLayoutManager = new LinearLayoutManager(view.getContext());
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+
+        FloatingActionButton registerGame = (FloatingActionButton)view.findViewById(R.id.gamefinder_add);
+        registerGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(view.getContext(), GameRegister.class);
+                startActivity(intent);
+            }
+        });
+
+        return view;
     }
 
     // Rename method, update argument and hook method into UI event
