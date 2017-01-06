@@ -12,7 +12,8 @@
             android:title="Court Finder" />
 
         <item
-            android:title="Dummy01" />
+            android:id="@+id/drawer_me"
+            android:title="Me" />
     </group>
 
     <item

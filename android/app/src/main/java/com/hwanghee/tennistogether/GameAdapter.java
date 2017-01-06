@@ -1,5 +1,7 @@
 package com.hwanghee.tennistogether;
 
+import android.content.Intent;
+import android.media.Image;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -8,7 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -41,12 +47,23 @@ public class GameAdapter extends RecyclerView.Adapter<GameViewHolder> {
         setImage(holder.player2Image, gameDatas.get(position).getPlayer2());
         setImage(holder.player3Image, gameDatas.get(position).getPlayer3());
         setImage(holder.player4Image, gameDatas.get(position).getPlayer4());
+        if(gameDatas.get(position).getType()) {
+            holder.player2Image.setVisibility(View.GONE);
+            holder.player4Image.setVisibility(View.GONE);
+        }
     }
 
-    private void setImage(ImageView imageView, String url) {
-        if(url!=null && url.length()>0) {
-            Picasso.with(imageView.getContext()).load(url).into(imageView);
-        }
+    private void setImage(final ImageView imageView, String userID) {
+        Ion.with(imageView.getContext()).load(MainActivity.serverURL+"/user/"+userID)
+                .asJsonObject().setCallback(new FutureCallback<JsonObject>() {
+            @Override
+            public void onCompleted(Exception e, JsonObject result) {
+                Log.d("setImage", result.toString());
+                Picasso.with(imageView.getContext())
+                        .load(result.get("picture").getAsString())
+                        .into(imageView);
+            }
+        });
     }
 
     @Override
@@ -54,16 +71,18 @@ public class GameAdapter extends RecyclerView.Adapter<GameViewHolder> {
         return gameDatas.size();
     }
 
-    public void add(boolean isSingle, String playtime, String court, boolean isMatched, boolean winner, String score,
-                    String url1, String url2, String url3, String url4) {
-        gameDatas.add(new GameData(isSingle, playtime, url1, url2, url3, url4, court, winner, isMatched, score));
+    public void add(String gameID, boolean isSingle, String playtime, String court, boolean isMatched, boolean winner, String score,
+                    String uid1, String uid2, String uid3, String uid4) {
+        gameDatas.add(new GameData(gameID, isSingle, playtime, uid1, uid2, uid3, uid4, court, winner, isMatched, score));
         notifyItemInserted(gameDatas.size()-1);
     }
 
     public void clear() { gameDatas.clear(); notifyDataSetChanged(); }
+
+    public GameData get(int position) { return gameDatas.get(position); }
 }
 
-class GameViewHolder extends RecyclerView.ViewHolder{
+class GameViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
     protected TextView courtText;
     protected TextView playtimeText;
     protected ImageView player1Image;
@@ -80,10 +99,20 @@ class GameViewHolder extends RecyclerView.ViewHolder{
         player2Image = (ImageView)itemView.findViewById(R.id.game_img2);
         player3Image = (ImageView)itemView.findViewById(R.id.game_img3);
         player4Image = (ImageView)itemView.findViewById(R.id.game_img4);
+
+        itemView.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(v.getContext(), GameInformation.class);
+        intent.putExtra("position", getAdapterPosition());
+        v.getContext().startActivity(intent);
     }
 }
 
 class GameData {
+    private String gameID;
     private boolean type; // true for single, false for double
     private String playtime;
     private String player1;
@@ -95,7 +124,8 @@ class GameData {
     private boolean isMatched; // true if the game has been matched
     private String score; // Empty if not finished, something if finished
 
-    public GameData(boolean type, String playtime, String player1, String player2, String player3, String player4, String court, boolean winner, boolean isMatched, String score) {
+    public GameData(String gameID, boolean type, String playtime, String player1, String player2, String player3, String player4, String court, boolean winner, boolean isMatched, String score) {
+        this.gameID = gameID;
         this.type = type;
         this.playtime = playtime;
         this.player1 = player1;
@@ -106,6 +136,11 @@ class GameData {
         this.winner = winner;
         this.isMatched = isMatched;
         this.score = score;
+    }
+
+    @Override
+    public String toString() {
+        return "<GameData type:" + type + " playtime:" + playtime + ">";
     }
 
     public boolean getType() {

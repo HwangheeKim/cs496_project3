@@ -19,10 +19,10 @@ import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
 public class GameFinder extends Fragment {
+    public static GameAdapter mAdapter;
     private OnFragmentInteractionListener mListener;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
-    private GameAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,9 +66,10 @@ public class GameFinder extends Fragment {
                     @Override
                     public void onCompleted(Exception e, JsonArray result) {
                         for(int i=0 ; i<result.size() ; i++) {
-                            Log.d("SOMETHING" + Integer.toString(i), result.get(i).toString());
                             JsonObject record = result.get(i).getAsJsonObject();
-                            mAdapter.add(record.get("type").getAsBoolean(),
+                            Log.d("Game/all", result.toString());
+                            // TODO : When there's no data on this fields, null pointer exception occurs.
+                            mAdapter.add(record.get("_id").getAsString(), record.get("type").getAsBoolean(),
                                     record.get("playtime").getAsString(), "court",
                                     record.get("isMatched").getAsBoolean(), record.get("winner").getAsBoolean(),
                                     record.get("score").getAsString(), record.get("player1").getAsString(),
