@@ -30,7 +30,6 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.activity_login);
 
         // Facebook login
@@ -40,33 +39,9 @@ public class Login extends AppCompatActivity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                GraphRequest request = GraphRequest.newMeRequest(
-                        AccessToken.getCurrentAccessToken(),
-                        new GraphRequest.GraphJSONObjectCallback() {
-                            @Override
-                            public void onCompleted(JSONObject object, GraphResponse response) {
-                                Log.d("Request Result", response.toString());
-
-                                Intent intent = new Intent();
-                                try {
-                                    intent.putExtra("fbid", response.getJSONObject().getString("id"));
-                                    intent.putExtra("name", response.getJSONObject().getString("name"));
-                                    intent.putExtra("email", response.getJSONObject().getString("email"));
-                                    intent.putExtra("imgurl", response.getJSONObject().getJSONObject("picture")
-                                            .getJSONObject("data").getString("url"));
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                                setResult(RESULT_OK, intent);
-                                finish();
-                            }
-                        }
-                );
-
-                Bundle parameters = new Bundle();
-                parameters.putString("fields", "id, name, email, gender, picture");
-                request.setParameters(parameters);
-                request.executeAsync();
+                Intent intent = new Intent();
+                setResult(RESULT_OK, intent);
+                finish();
             }
 
             @Override

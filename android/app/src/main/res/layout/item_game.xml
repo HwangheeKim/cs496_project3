@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/game_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="4dp"
+        android:layout_margin="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin='6dp'>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/game_court"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="목동 테니스코트"/>
+
+                <TextView
+                    android:id="@+id/game_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="60dp"
+                    android:layout_alignParentRight="true"
+                    android:text="2017년 1월 12일 (화) 17:00"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:id="@+id/game_imgframe1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_below="@id/game_court">
+
+                    <ImageView
+                        android:id="@+id/game_img1"
+                        android:src="@mipmap/ic_launcher"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_margin="@dimen/gamefinder_profile_margin"
+                        android:scaleType="centerCrop"/>
+
+                    <ImageView
+                        android:id="@+id/game_img2"
+                        android:src="@mipmap/ic_launcher"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_margin="@dimen/gamefinder_profile_margin"
+                        android:scaleType="centerCrop"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/game_vs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_below="@id/game_court"
+                    android:layout_marginLeft = "30dp"
+                    android:layout_marginRight = "30dp"
+                    android:layout_toRightOf="@id/game_imgframe1"
+                    android:gravity="center"
+                    android:text="vs"/>
+
+                <LinearLayout
+                    android:id="@+id/game_imgframe2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_below="@id/game_court"
+                    android:layout_toRightOf="@id/game_vs">
+
+                    <ImageView
+                        android:id="@+id/game_img3"
+                        android:src="@mipmap/ic_launcher"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_margin="@dimen/gamefinder_profile_margin"
+                        android:scaleType="centerCrop"/>
+
+                    <ImageView
+                        android:id="@+id/game_img4"
+                        android:src="@mipmap/ic_launcher"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_margin="@dimen/gamefinder_profile_margin"
+                        android:scaleType="centerCrop"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</FrameLayout>
