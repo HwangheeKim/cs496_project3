@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity
     static String userName = "Username";
     static String userID = "";
     static String userEmail = "something@some.thing";
+    static String serverURL = "http://52.78.101.202:3000";
     private DrawerLayout drawerLayout;
     private NavigationView navView;
 
