@@ -1,106 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/game_item"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:cardCornerRadius="4dp"
-    android:layout_margin="5dp">
+    android:layout_height="wrap_content">
 
-    <LinearLayout
+    <android.support.v7.widget.CardView
+        android:id="@+id/game_item"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="4dp"
+        android:layout_margin="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
-
-            <TextView
-                android:id="@+id/game_court"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="목동 테니스코트"/>
-
-            <TextView
-                android:id="@+id/game_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="60dp"
-                android:layout_alignParentRight="true"
-                android:text="2017년 1월 12일 (화) 17:00"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center">
+            android:orientation="vertical"
+            android:layout_margin='6dp'>
 
             <LinearLayout
-                android:id="@+id/game_imgframe1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_below="@id/game_court">
+                android:gravity="center">
 
-                <ImageView
-                    android:id="@+id/game_img1"
-                    android:src="@mipmap/ic_launcher"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:scaleType="centerCrop"/>
+                <TextView
+                    android:id="@+id/game_court"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="목동 테니스코트"/>
 
-                <ImageView
-                    android:id="@+id/game_img2"
-                    android:src="@mipmap/ic_launcher"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:scaleType="centerCrop"/>
+                <TextView
+                    android:id="@+id/game_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="60dp"
+                    android:layout_alignParentRight="true"
+                    android:text="2017년 1월 12일 (화) 17:00"/>
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/game_vs"
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_below="@id/game_court"
-                android:layout_marginLeft = "30dp"
-                android:layout_marginRight = "30dp"
-                android:layout_toRightOf="@id/game_imgframe1"
-                android:gravity="center"
-                android:text="vs"/>
-
             <LinearLayout
-                android:id="@+id/game_imgframe2"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_below="@id/game_court"
-                android:layout_toRightOf="@id/game_vs">
+                android:gravity="center">
 
-                <ImageView
-                    android:id="@+id/game_img3"
-                    android:src="@mipmap/ic_launcher"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:scaleType="centerCrop"/>
+                <LinearLayout
+                    android:id="@+id/game_imgframe1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_below="@id/game_court">
 
-                <ImageView
-                    android:id="@+id/game_img4"
-                    android:src="@mipmap/ic_launcher"
-                    android:layout_width="60dp"
+                    <ImageView
+                        android:id="@+id/game_img1"
+                        android:src="@mipmap/ic_launcher"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_margin="@dimen/gamefinder_profile_margin"
+                        android:scaleType="centerCrop"/>
+
+                    <ImageView
+                        android:id="@+id/game_img2"
+                        android:src="@mipmap/ic_launcher"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_margin="@dimen/gamefinder_profile_margin"
+                        android:scaleType="centerCrop"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/game_vs"
+                    android:layout_width="wrap_content"
                     android:layout_height="60dp"
-                    android:scaleType="centerCrop"/>
+                    android:layout_below="@id/game_court"
+                    android:layout_marginLeft = "30dp"
+                    android:layout_marginRight = "30dp"
+                    android:layout_toRightOf="@id/game_imgframe1"
+                    android:gravity="center"
+                    android:text="vs"/>
+
+                <LinearLayout
+                    android:id="@+id/game_imgframe2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_below="@id/game_court"
+                    android:layout_toRightOf="@id/game_vs">
+
+                    <ImageView
+                        android:id="@+id/game_img3"
+                        android:src="@mipmap/ic_launcher"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_margin="@dimen/gamefinder_profile_margin"
+                        android:scaleType="centerCrop"/>
+
+                    <ImageView
+                        android:id="@+id/game_img4"
+                        android:src="@mipmap/ic_launcher"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_margin="@dimen/gamefinder_profile_margin"
+                        android:scaleType="centerCrop"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
+
         </LinearLayout>
 
+    </android.support.v7.widget.CardView>
 
-    </LinearLayout>
-
-</android.support.v7.widget.CardView>
+</FrameLayout>
