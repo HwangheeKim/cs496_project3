@@ -146,6 +146,12 @@ class GameData {
         return "<GameData type:" + type + " playtime:" + playtime + ">";
     }
 
+    public String getGameID() {
+        return gameID;
+    }
+    public void setGameID(String gameID) {
+        this.gameID = gameID;
+    }
     public boolean getType() {
         return type;
     }
