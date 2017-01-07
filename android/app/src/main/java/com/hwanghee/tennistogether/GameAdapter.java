@@ -54,6 +54,9 @@ public class GameAdapter extends RecyclerView.Adapter<GameViewHolder> {
     }
 
     private void setImage(final ImageView imageView, String userID) {
+        if (userID==null || userID.length() == 0) return;
+
+
         Ion.with(imageView.getContext()).load(MainActivity.serverURL+"/user/"+userID)
                 .asJsonObject().setCallback(new FutureCallback<JsonObject>() {
             @Override
