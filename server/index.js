@@ -39,7 +39,8 @@ var gameSchema = new Schema({
     player2 : String,
     player3 : String,
     player4 : String,
-    court : [{type: Schema.ObjectId, ref: 'Court'}],
+    //court : [{type: Schema.ObjectId, ref: 'Court'}],
+    court : String,
     winner : Boolean,
     isMatched : Boolean,
     score : String
@@ -90,15 +91,43 @@ app.post('/user/enroll', function(req, res) {
         phone : req.body['phone']
     };
 
-    User.findOneAndUpdate( {userID : req.body['userID']}, newUser, {upsert: true, new: true}, function (err, res) {
+    User.findOneAndUpdate( {userID : req.body['userID']}, newUser, {upsert: true, new: true}, function (err, result) {
         if (err) throw err;
-        console.log("DONE PROCESS " + res)
+        console.log("DONE PROCESS " + result)
     });
 
 
     res.writeHead(200, {'Content-Type':'application/json'});
     res.write(JSON.stringify({result: 'OK'}));
     res.end();
+});
+
+// POST request for game register
+app.post('/game/register', function(req, res) {
+    console.log("[Game/register] Got request");
+    var newGame = new Game({
+        type : req.body['type'],
+        playtime : req.body['playtime'],
+        player1 : req.body['player1'],
+        player2 : "",
+        player3 : "",
+        player4 : "",
+        court : req.body['court'],
+        winner : false,
+        isMatched : false,
+        score : ""
+    });
+
+    console.log("[Game/register] playtime " + req.body['playtime']);
+    
+    newGame.save(function(err, result) {
+        if (err) throw err;
+        console.log("[Game/register] Game registered " + result);
+
+        res.writeHead(200, {'Content-Type':'application/json'});
+        res.write(JSON.stringify({result: 'OK'}));
+        res.end();
+    });
 });
 
 
