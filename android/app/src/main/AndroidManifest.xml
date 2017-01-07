@@ -27,7 +27,8 @@
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
         <activity android:name=".GameRegister" />
-        <activity android:name=".GameInformation"></activity>
+        <activity android:name=".GameInformation" />
+        <activity android:name=".UserInformation"></activity>
     </application>
 
 </manifest>
