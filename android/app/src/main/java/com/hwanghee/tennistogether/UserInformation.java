@@ -11,7 +11,5 @@ public class UserInformation extends AppCompatActivity {
         setContentView(R.layout.activity_user_information);
 
         getIntent().getExtras().getString("UserID");
-
-        
     }
 }
