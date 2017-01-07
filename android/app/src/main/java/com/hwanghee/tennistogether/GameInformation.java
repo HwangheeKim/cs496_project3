@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.facebook.appevents.AppEventsLogger;
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
 public class GameInformation extends AppCompatActivity {
@@ -25,18 +28,34 @@ public class GameInformation extends AppCompatActivity {
         if(data.getType()) {
             findViewById(R.id.gameinfo_player2).setVisibility(View.GONE);
             findViewById(R.id.gameinfo_player4).setVisibility(View.GONE);
+        } else {
+            findViewById(R.id.gameinfo_player2).setVisibility(View.VISIBLE);
+            findViewById(R.id.gameinfo_player4).setVisibility(View.VISIBLE);
         }
 
-        // Show proper name, group, image
-        loadUserInfo();
-
-        // make OnClickListener on each players layout
-
-        //
-
+        Ion.with(getApplicationContext()).load(MainActivity.serverURL+"/game/"+data.getGameID())
+                .asJsonObject().setCallback(new FutureCallback<JsonObject>() {
+            @Override
+            public void onCompleted(Exception e, JsonObject result) {
+                updateView(result);
+            }
+        });
     }
 
-    private void loadUserInfo() {
+    private void updateView(JsonObject result) {
+        String player;
+
+        player = result.get("player1").getAsString();
+        if(player.length()>0) {
+            Ion.with(getApplicationContext()).load(MainActivity.serverURL+"/user/"+player).asJsonObject()
+                    .setCallback(new FutureCallback<JsonObject>() {
+                        @Override
+                        public void onCompleted(Exception e, JsonObject result) {
+                            // TODO : What if there doesn't exist such user?
+                            // TODO : Start from here!
+                        }
+                    });
+        }
     }
 
     public void tt(String msg) {
