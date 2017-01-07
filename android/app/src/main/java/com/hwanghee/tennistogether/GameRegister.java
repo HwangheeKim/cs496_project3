@@ -121,7 +121,7 @@ public class GameRegister extends AppCompatActivity {
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
-                        Toast.makeText(getApplicationContext(), "POSTED", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getApplicationContext(), "POSTED", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
