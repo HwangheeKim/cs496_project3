@@ -52,6 +52,7 @@ public class GameFinder extends Fragment {
         searchGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loadGameData(view);
             }
         });
 
@@ -68,7 +69,7 @@ public class GameFinder extends Fragment {
                     public void onCompleted(Exception e, JsonArray result) {
                         for(int i=0 ; i<result.size() ; i++) {
                             JsonObject record = result.get(i).getAsJsonObject();
-                            Log.d("Game/all", result.toString());
+                            Log.d("Game/all", result.get(i).toString());
                             // TODO : When there's no data on this fields, null pointer exception occurs.
                             mAdapter.add(record.get("_id").getAsString(), record.get("type").getAsBoolean(),
                                     record.get("playtime").getAsString(), "court",
