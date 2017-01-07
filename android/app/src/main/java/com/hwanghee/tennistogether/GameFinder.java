@@ -36,7 +36,7 @@ public class GameFinder extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
-        loadGameData(view);
+//        loadGameData(view);
 
         FloatingActionButton registerGame = (FloatingActionButton)view.findViewById(R.id.gamefinder_add);
         registerGame.setOnClickListener(new View.OnClickListener() {
@@ -57,28 +57,28 @@ public class GameFinder extends Fragment {
         return view;
     }
 
-    private void loadGameData(View view) {
-        mAdapter.clear();
-        Ion.with(view.getContext())
-                .load(MainActivity.serverURL + "/game/all")
-                .asJsonArray()
-                .setCallback(new FutureCallback<JsonArray>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonArray result) {
-                        for(int i=0 ; i<result.size() ; i++) {
-                            JsonObject record = result.get(i).getAsJsonObject();
-                            Log.d("Game/all", result.toString());
-                            // TODO : When there's no data on this fields, null pointer exception occurs.
-                            mAdapter.add(record.get("_id").getAsString(), record.get("type").getAsBoolean(),
-                                    record.get("playtime").getAsString(), "court",
-                                    record.get("isMatched").getAsBoolean(), record.get("winner").getAsBoolean(),
-                                    record.get("score").getAsString(), record.get("player1").getAsString(),
-                                    record.get("player2").getAsString(), record.get("player3").getAsString(),
-                                    record.get("player4").getAsString());
-                        }
-                    }
-                });
-    }
+//    private void loadGameData(View view) {
+//        mAdapter.clear();
+//        Ion.with(view.getContext())
+//                .load(MainActivity.serverURL + "/game/all")
+//                .asJsonArray()
+//                .setCallback(new FutureCallback<JsonArray>() {
+//                    @Override
+//                    public void onCompleted(Exception e, JsonArray result) {
+//                        for(int i=0 ; i<result.size() ; i++) {
+//                            JsonObject record = result.get(i).getAsJsonObject();
+//                            Log.d("Game/all", result.toString());
+//                            // TODO : When there's no data on this fields, null pointer exception occurs.
+//                            mAdapter.add(record.get("_id").getAsString(), record.get("type").getAsBoolean(),
+//                                    record.get("playtime").getAsString(), "court",
+//                                    record.get("isMatched").getAsBoolean(), record.get("winner").getAsBoolean(),
+//                                    record.get("score").getAsString(), record.get("player1").getAsString(),
+//                                    record.get("player2").getAsString(), record.get("player3").getAsString(),
+//                                    record.get("player4").getAsString());
+//                        }
+//                    }
+//                });
+//    }
 
     // Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

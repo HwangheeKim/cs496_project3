@@ -20,7 +20,14 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/drawer_header"
         app:menu="@menu/drawer"
-        android:background="#EDEDED" />
+        android:background="#EDEDED" >
+
+        <TextView
+            android:text="%%%%%%%%%%%%%%%%%%%5메인 페이지%%%%%%%%%%%%%%%%%"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView" />
+    </android.support.design.widget.NavigationView>
 
 
 </android.support.v4.widget.DrawerLayout>
