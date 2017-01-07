@@ -23,27 +23,27 @@ mongoose.connect('localhost', 'tennis');
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
-    userID : String,
-    name : String,
-    picture : String,
-    email : String,
-    group : String,
-    phone : String
+    userID : {type:String, required:true},
+    name : {type:String, required:true},
+    picture : {type:String, default:"http://www.ogubin.com/images/empty_profile2.png"},
+    email : {type:String, default:""},
+    group : {type:String, default:""},
+    phone : {type:String, default:""}
 });
 var User = mongoose.model('user', userSchema, 'user');
 
 var gameSchema = new Schema({
-    type : Boolean,
-    playtime : Date,
-    player1 : String,
-    player2 : String,
-    player3 : String,
-    player4 : String,
+    type : {type:Boolean, default:true},
+    playtime : {type:Date, default:Date.now},
+    player1 : {type:String, default:""},
+    player2 : {type:String, default:""},
+    player3 : {type:String, default:""},
+    player4 : {type:String, default:""},
     //court : [{type: Schema.ObjectId, ref: 'Court'}],
-    court : String,
-    winner : Boolean,
-    isMatched : Boolean,
-    score : String
+    court : {type:String, default:""},
+    winner : {type:Boolean, default:false},
+    isMatched : {type:Boolean, default:false},
+    score : {type:String, default:""}
 });
 var Game = mongoose.model('game', gameSchema, 'game');
 
@@ -57,11 +57,33 @@ var Court = mongoose.model('court', courtSchema, 'court');
 
 /////////*    Server Implementation     */////////
 
-// Get rerquest for game information
+// Get request for all game information
 app.get('/game/all', function(req, res) {
     Game.find({}, function(err, results) {
         if (err) throw err;
         
+        res.writeHead(200, {'Content-Type':'application/json'});
+        res.write(JSON.stringify(results));
+        res.end();
+    });
+});
+
+// Get request for game information
+app.get('/game/:gameID', function(req, res) {
+    Game.findById(req.params.gameID, function(err, result){
+        if (err) throw err;
+
+        res.writeHead(200, {'Content-Type':'application/json'});
+        res.write(JSON.stringify(result));
+        res.end();
+    });
+});
+
+// GET request for all user
+app.get('/user/all', function(req, res) {
+    User.find({}, function(err, results) {
+        if (err) throw err;
+    
         res.writeHead(200, {'Content-Type':'application/json'});
         res.write(JSON.stringify(results));
         res.end();
@@ -109,9 +131,6 @@ app.post('/game/register', function(req, res) {
         type : req.body['type'],
         playtime : req.body['playtime'],
         player1 : req.body['player1'],
-        player2 : "",
-        player3 : "",
-        player4 : "",
         court : req.body['court'],
         winner : false,
         isMatched : false,
