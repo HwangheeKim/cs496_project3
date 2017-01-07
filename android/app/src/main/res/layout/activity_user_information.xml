@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_user_information"
     android:layout_width="match_parent"
@@ -8,6 +8,45 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.hwanghee.tennistogether.UserInformation">
+    tools:context="com.hwanghee.tennistogether.UserInformation"
+    android:orientation="vertical">
 
-</RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/userInfoImage"
+
+            />
+
+        <TextView
+            android:text="이름"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:id="@+id/userInfoText1"
+
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:id="@+id/userInfoButton"
+            android:text="정보 수정"
+            android:visibility="invisible"
+            />
+
+
+
+
+
+
+
+
+    </LinearLayout>
+</LinearLayout>
