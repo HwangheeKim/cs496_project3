@@ -30,11 +30,20 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 
+//TextView GRtv1 = (TextView) findViewById(R.id.textViewYY);
+//        TextView GRtv2 = (TextView) findViewById(R.id.textViewMM);
+//        TextView GRtv3 = (TextView) findViewById(R.id.textViewDD);
+
 public class GameRegister extends AppCompatActivity {
 
+    Calendar current = Calendar.getInstance();
     int year, month, day, hour, minute;
-    String address = new String();
+    TextView GRtv1;
+    TextView GRtv2;
+    TextView GRtv3;
 
+
+    String address = new String();
     RadioGroup radio;
 
 
@@ -42,21 +51,22 @@ public class GameRegister extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_register);
+
+        GRtv1 = (TextView) findViewById(R.id.textViewYY);
+        GRtv2 = (TextView) findViewById(R.id.textViewMM);
+        GRtv3 = (TextView) findViewById(R.id.textViewDD);
+        year = current.get(Calendar.YEAR);
+        month = current.get(Calendar.MONTH);
+        day = current.get(Calendar.DAY_OF_MONTH);
+        GRtv1.setText(Integer.toString(year));
+        GRtv2.setText(Integer.toString(month+1));
+        GRtv3.setText(Integer.toString(day));
+
         final EditText editText = (EditText) findViewById(R.id.editText);
         Button addressBtn = (Button) findViewById(R.id.addressbtn);
         radio = (RadioGroup) findViewById(R.id.RadioGroup1);
 
-        addressBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                String inPutText = editText.getText().toString();
-                Toast.makeText(GameRegister.this, "입력되었습니다.", Toast.LENGTH_SHORT).show();
-                address = inPutText;
-                setVariables();
-                Intent intent = new Intent();
-                setResult(RESULT_OK, intent);
-                finish();
-            }
-        });
+
 
 
         RelativeLayout date = (RelativeLayout) findViewById(R.id.RL1);
@@ -100,6 +110,18 @@ public class GameRegister extends AppCompatActivity {
                 }
             }
         });
+
+        addressBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String inPutText = editText.getText().toString();
+                Toast.makeText(GameRegister.this, "입력되었습니다.", Toast.LENGTH_SHORT).show();
+                address = inPutText;
+                setVariables();
+                Intent intent = new Intent();
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
     }
 
     public void setVariables() {
@@ -110,7 +132,8 @@ public class GameRegister extends AppCompatActivity {
             json.addProperty("player1", MainActivity.userID);
 
             SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSZ", Locale.getDefault());
-            Date ndate = new Date(year, month+1, day, hour, minute);
+            Date ndate;
+            ndate = new Date(year-1900, month+1, day-30, hour, minute);
             dateformat.setTimeZone(TimeZone.getTimeZone("UTC"));
             dateformat.format(ndate);
 
@@ -137,9 +160,6 @@ public class GameRegister extends AppCompatActivity {
         this.month = monthOfYear;
         this.day = dayOfMonth;
 
-        TextView GRtv1 = (TextView) findViewById(R.id.textViewYY);
-        TextView GRtv2 = (TextView) findViewById(R.id.textViewMM);
-        TextView GRtv3 = (TextView) findViewById(R.id.textViewDD);
 
         GRtv1.setText(Integer.toString(this.year));
         GRtv2.setText(Integer.toString(this.month));
@@ -159,30 +179,24 @@ public class GameRegister extends AppCompatActivity {
     }
 
     public static class MyDialogFragment extends DialogFragment {
-
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View v = inflater.inflate(R.layout.fragment_game_date, container, false);
 
             final DatePicker datePicker = (DatePicker) v.findViewById(R.id.datePicker);
-            datePicker.init(2017, 1, 1, new DatePicker.OnDateChangedListener() {
+            Calendar c = Calendar.getInstance();
+            datePicker.init(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
                 @Override
                 public void onDateChanged(DatePicker view, int yearOfCentury, int monthOfYear, int dayOfMonth) {
                     ((GameRegister) getActivity()).setDate(yearOfCentury, monthOfYear, dayOfMonth);
-
                 }
-
             });
-
-
             Button finishButton = (Button) v.findViewById(R.id.datebutton);
             finishButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     getActivity().getSupportFragmentManager().beginTransaction().remove(MyDialogFragment.this).commit();
-
                 }
             });
             return v;
@@ -197,6 +211,9 @@ public class GameRegister extends AppCompatActivity {
             View v = inflater.inflate(R.layout.fragment_game_time, container, false);
 
             final TimePicker timePicker = (TimePicker)v.findViewById(R.id.timePicker);
+            Calendar c = Calendar.getInstance();
+            timePicker.setCurrentHour(c.get(Calendar.HOUR));
+            timePicker.setCurrentMinute(c.get(Calendar.MINUTE));
             timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
                 @Override
                 public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {

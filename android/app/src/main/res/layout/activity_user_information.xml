@@ -38,7 +38,7 @@
             android:layout_marginLeft="70dp"
             android:id="@+id/InfoEditButton"
             android:text="정보 수정"
-            android:visibility="invisible" />
+             />
 
     </LinearLayout>
 
