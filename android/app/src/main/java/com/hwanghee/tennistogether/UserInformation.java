@@ -4,9 +4,12 @@ import android.util.Log;
 import android.widget.Space;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import static android.R.attr.data;
 
 public class UserInformation extends AppCompatActivity {
     ImageView UserImage;
@@ -27,18 +30,24 @@ public class UserInformation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_information);
 
+
+
         UItv1 = (TextView) findViewById(R.id.userInfoText1);
         UItv2 = (TextView) findViewById(R.id.userInfoText2);
         UItv3 = (TextView) findViewById(R.id.userInfoText3);
         UItv4 = (TextView) findViewById(R.id.userInfoText4);
         UserImage = (ImageView) findViewById(R.id.userInfoImage);
-        InfoEditButton = (Button) findViewById(R.id.userInfoButton);
+        InfoEditButton = (Button) findViewById(R.id.InfoEditButton);
         UserSpace = (Space) findViewById(R.id.UserSpace);
         UserSpace.getResources().getDrawable(R.drawable.border);
+        String userIDclicked = getIntent().getExtras().getString("UserID");
 
+        if(MainActivity.userID == userIDclicked) {
+            findViewById(R.id.InfoEditButton).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.InfoEditButton).setVisibility(View.GONE);
+        }
 
         getIntent().getExtras().getString("userID");
     }
-
-
 }
