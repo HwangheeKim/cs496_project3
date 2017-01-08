@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity
             public void onInitialized() {
                 if(isLoggedIn()) {
                     updateMyprofile(false);
-                    Snackbar.make(navView, "Welcome Back, " + userName + "!", Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
@@ -133,6 +132,9 @@ public class MainActivity extends AppCompatActivity
                             e.printStackTrace();
                         }
 
+                        if(!isFirsttime) {
+                            Snackbar.make(navView, "Welcome Back, " + userName + "!", Snackbar.LENGTH_SHORT).show();
+                        }
                         enrollMe();
                     }
                 }

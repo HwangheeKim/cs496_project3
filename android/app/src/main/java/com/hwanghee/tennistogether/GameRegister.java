@@ -1,5 +1,6 @@
 package com.hwanghee.tennistogether;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
@@ -51,6 +52,9 @@ public class GameRegister extends AppCompatActivity {
                 Toast.makeText(GameRegister.this, "입력되었습니다.", Toast.LENGTH_SHORT).show();
                 address = inPutText;
                 setVariables();
+                Intent intent = new Intent();
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
 
