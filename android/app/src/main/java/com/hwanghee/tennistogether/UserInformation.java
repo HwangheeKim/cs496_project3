@@ -48,6 +48,7 @@ public class UserInformation extends AppCompatActivity {
             findViewById(R.id.InfoEditButton).setVisibility(View.GONE);
         }
 
-        getIntent().getExtras().getString("userID");
+        Log.d("userIDclicked: " ,  userIDclicked);
+        Log.d("MainActivity.userID: " ,  MainActivity.userID);
     }
 }
