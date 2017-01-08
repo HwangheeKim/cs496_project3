@@ -59,7 +59,8 @@ public class GameFinder extends Fragment {
         return view;
     }
 
-    private void loadGameData(View view) {
+
+    public void loadGameData(View view) {
         mAdapter.clear();
         Ion.with(view.getContext())
                 .load(MainActivity.serverURL + "/game/all")
