@@ -50,6 +50,9 @@ public class GameAdapter extends RecyclerView.Adapter<GameViewHolder> {
         if(gameDatas.get(position).getType()) {
             holder.player2Image.setVisibility(View.GONE);
             holder.player4Image.setVisibility(View.GONE);
+        } else {
+            holder.player2Image.setVisibility(View.VISIBLE);
+            holder.player4Image.setVisibility(View.VISIBLE);
         }
     }
 
@@ -109,7 +112,7 @@ class GameViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(v.getContext(), GameInformation.class);
-        intent.putExtra("position", getAdapterPosition());
+        intent.putExtra("gameID", GameFinder.mAdapter.get(getAdapterPosition()).getGameID());
         v.getContext().startActivity(intent);
     }
 }

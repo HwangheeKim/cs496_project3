@@ -1,6 +1,6 @@
 package com.hwanghee.tennistogether;
 
-import android.support.v4.widget.Space;
+import android.widget.Space;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;

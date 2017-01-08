@@ -36,8 +36,7 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_margin="@dimen/gamefinder_profile_margin"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/ic_launcher"/>
+                    android:scaleType="centerCrop"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -49,7 +48,6 @@
                         android:id="@+id/gameinfo_name1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="HWANGHEE KIM"
                         android:textColor="#ffffff"
                         android:textStyle="bold"
                         android:textSize="24dp"/>
@@ -59,11 +57,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#ffffff"
-                        android:textStyle="bold"
-                        android:text="KAIST STROKE"/>
+                        android:textStyle="bold"/>
 
                 </LinearLayout>
             </LinearLayout>
+
+            <TextView
+                android:visibility="invisible"
+                android:id="@+id/gameinfo_empty1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:textSize="10dp"
+                android:text="TAP HERE TO JOIN THE GAME"/>
 
         </FrameLayout>
 
@@ -86,8 +93,7 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_margin="@dimen/gamefinder_profile_margin"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/ic_launcher"/>
+                    android:scaleType="centerCrop"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -99,7 +105,6 @@
                         android:id="@+id/gameinfo_name2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="HWANGHEE KIM"
                         android:textColor="#ffffff"
                         android:textStyle="bold"
                         android:textSize="24dp"/>
@@ -109,8 +114,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#ffffff"
-                        android:textStyle="bold"
-                        android:text="KAIST STROKE"/>
+                        android:textStyle="bold"/>
 
                 </LinearLayout>
 
@@ -154,7 +158,6 @@
                         android:id="@+id/gameinfo_name3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="HWANGHEE KIM"
                         android:textColor="#ffffff"
                         android:textStyle="bold"
                         android:textSize="24dp"/>
@@ -164,8 +167,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#ffffff"
-                        android:textStyle="bold"
-                        android:text="KAIST STROKE"/>
+                        android:textStyle="bold"/>
 
                 </LinearLayout>
 
@@ -174,8 +176,7 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_margin="@dimen/gamefinder_profile_margin"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/ic_launcher"/>
+                    android:scaleType="centerCrop"/>
 
             </LinearLayout>
 
@@ -216,7 +217,6 @@
                         android:id="@+id/gameinfo_name4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="HWANGHEE KIM"
                         android:textColor="#ffffff"
                         android:textStyle="bold"
                         android:textSize="24dp"/>
@@ -226,8 +226,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#ffffff"
-                        android:textStyle="bold"
-                        android:text="KAIST STROKE"/>
+                        android:textStyle="bold"/>
 
                 </LinearLayout>
 
@@ -236,8 +235,7 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_margin="@dimen/gamefinder_profile_margin"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/ic_launcher"/>
+                    android:scaleType="centerCrop"/>
 
             </LinearLayout>
 

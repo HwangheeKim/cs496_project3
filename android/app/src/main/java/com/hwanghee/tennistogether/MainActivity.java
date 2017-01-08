@@ -129,20 +129,6 @@ public class MainActivity extends AppCompatActivity
                             e.printStackTrace();
                         }
 
-                        View header = navView.getHeaderView(0);
-                        ImageView drawerAvatar = (ImageView)header.findViewById(R.id.drawer_avatar);
-                        String imgurl = "https://graph.facebook.com/" + userID + "/picture?height=500";
-                        Picasso.with(header.getContext()).load(imgurl).into(drawerAvatar);
-
-                        TextView drawerUserName = (TextView)header.findViewById(R.id.drawer_username);
-                        drawerUserName.setText(userName);
-
-                        TextView drawerEmail = (TextView)header.findViewById(R.id.drawer_email);
-                        drawerEmail.setText(userEmail);
-
-                        if(isFirsttime==false) {
-                            Snackbar.make(navView, "Welcome back, " + userName + "!", Snackbar.LENGTH_SHORT).show();
-                        }
                         enrollMe();
                     }
                 }
@@ -170,6 +156,16 @@ public class MainActivity extends AppCompatActivity
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
+                        View header = navView.getHeaderView(0);
+                        ImageView drawerAvatar = (ImageView)header.findViewById(R.id.drawer_avatar);
+                        String imgurl = "https://graph.facebook.com/" + userID + "/picture?height=500";
+                        Picasso.with(header.getContext()).load(imgurl).into(drawerAvatar);
+
+                        TextView drawerUserName = (TextView)header.findViewById(R.id.drawer_username);
+                        drawerUserName.setText(userName);
+
+                        TextView drawerEmail = (TextView)header.findViewById(R.id.drawer_email);
+                        drawerEmail.setText(userEmail);
                     }
                 });
     }
