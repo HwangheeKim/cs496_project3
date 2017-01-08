@@ -9,6 +9,7 @@
         android:id="@+id/game_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clickable="true"
         app:cardCornerRadius="4dp"
         android:layout_margin="5dp">
 

@@ -1,8 +1,10 @@
 package com.hwanghee.tennistogether;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.media.Image;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,7 +41,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(GameViewHolder holder, int position) {
+    public void onBindViewHolder(GameViewHolder holder, final int position) {
         GameData gameData = gameDatas.get(position);
         holder.courtText.setText(gameData.getCourt());
         holder.playtimeText.setText(gameData.getPlaytime());
@@ -50,12 +52,25 @@ public class GameAdapter extends RecyclerView.Adapter<GameViewHolder> {
         if(gameDatas.get(position).getType()) {
             holder.player2Image.setVisibility(View.GONE);
             holder.player4Image.setVisibility(View.GONE);
+        } else {
+            holder.player2Image.setVisibility(View.VISIBLE);
+            holder.player4Image.setVisibility(View.VISIBLE);
         }
+        holder.gameItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), GameInformation.class);
+                intent.putExtra("gameID", GameFinder.mAdapter.get(position).getGameID());
+                ((Activity)v.getContext()).startActivityForResult(intent, MainActivity.ADAPTER_RELOAD);
+            }
+        });
     }
 
     private void setImage(final ImageView imageView, String userID) {
-        if (userID==null || userID.length() == 0) return;
-
+        if (userID==null || userID.length() == 0) {
+            imageView.setImageResource(R.mipmap.ic_launcher);
+            return;
+        }
 
         Ion.with(imageView.getContext()).load(MainActivity.serverURL+"/user/"+userID)
                 .asJsonObject().setCallback(new FutureCallback<JsonObject>() {
@@ -83,9 +98,12 @@ public class GameAdapter extends RecyclerView.Adapter<GameViewHolder> {
     public void clear() { gameDatas.clear(); notifyDataSetChanged(); }
 
     public GameData get(int position) { return gameDatas.get(position); }
+
+    public int size() { return gameDatas.size(); }
 }
 
-class GameViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+class GameViewHolder extends RecyclerView.ViewHolder {
+    protected CardView gameItem;
     protected TextView courtText;
     protected TextView playtimeText;
     protected ImageView player1Image;
@@ -96,22 +114,15 @@ class GameViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
     public GameViewHolder(View itemView) {
         super(itemView);
 
+        gameItem = (CardView)itemView.findViewById(R.id.game_item);
         courtText = (TextView)itemView.findViewById(R.id.game_court);
         playtimeText = (TextView)itemView.findViewById(R.id.game_time);
         player1Image = (ImageView)itemView.findViewById(R.id.game_img1);
         player2Image = (ImageView)itemView.findViewById(R.id.game_img2);
         player3Image = (ImageView)itemView.findViewById(R.id.game_img3);
         player4Image = (ImageView)itemView.findViewById(R.id.game_img4);
-
-        itemView.setOnClickListener(this);
     }
 
-    @Override
-    public void onClick(View v) {
-        Intent intent = new Intent(v.getContext(), GameInformation.class);
-        intent.putExtra("position", getAdapterPosition());
-        v.getContext().startActivity(intent);
-    }
 }
 
 class GameData {

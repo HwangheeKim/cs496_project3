@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,11 +19,16 @@ import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
+import java.net.URLDecoder;
+
+import static android.app.Activity.RESULT_OK;
+
 public class GameFinder extends Fragment {
     public static GameAdapter mAdapter;
     private OnFragmentInteractionListener mListener;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,6 +42,16 @@ public class GameFinder extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.gamefinder_swiperefresh);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadGameData(view);
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+
         loadGameData(view);
 
         FloatingActionButton registerGame = (FloatingActionButton)view.findViewById(R.id.gamefinder_add);
@@ -44,7 +60,7 @@ public class GameFinder extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(view.getContext(), GameRegister.class);
                 intent.putExtra("userID", "131....");
-                startActivity(intent);
+                startActivityForResult(intent, MainActivity.ADAPTER_RELOAD);
             }
         });
 
@@ -52,13 +68,15 @@ public class GameFinder extends Fragment {
         searchGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loadGameData(view);
             }
         });
 
         return view;
     }
 
-    private void loadGameData(View view) {
+
+    public void loadGameData(View view) {
         mAdapter.clear();
         Ion.with(view.getContext())
                 .load(MainActivity.serverURL + "/game/all")
@@ -68,10 +86,16 @@ public class GameFinder extends Fragment {
                     public void onCompleted(Exception e, JsonArray result) {
                         for(int i=0 ; i<result.size() ; i++) {
                             JsonObject record = result.get(i).getAsJsonObject();
-                            Log.d("Game/all", result.toString());
+                            Log.d("Game/all", result.get(i).toString());
                             // TODO : When there's no data on this fields, null pointer exception occurs.
+                            String courtDecoded = "";
+                            try {
+                                courtDecoded = URLDecoder.decode(record.get("court").getAsString(), "utf-8");
+                            } catch (Exception e1) {
+                                e1.printStackTrace();
+                            }
                             mAdapter.add(record.get("_id").getAsString(), record.get("type").getAsBoolean(),
-                                    record.get("playtime").getAsString(), "court",
+                                    record.get("playtime").getAsString(), courtDecoded,
                                     record.get("isMatched").getAsBoolean(), record.get("winner").getAsBoolean(),
                                     record.get("score").getAsString(), record.get("player1").getAsString(),
                                     record.get("player2").getAsString(), record.get("player3").getAsString(),
@@ -79,6 +103,17 @@ public class GameFinder extends Fragment {
                         }
                     }
                 });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode != RESULT_OK) {
+            return;
+        }
+        if(requestCode == MainActivity.ADAPTER_RELOAD) {
+            loadGameData(this.getView());
+        }
     }
 
     // Rename method, update argument and hook method into UI event
