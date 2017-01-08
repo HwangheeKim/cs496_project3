@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.facebook.AccessToken;
 import com.github.clans.fab.FloatingActionButton;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -59,7 +60,6 @@ public class GameFinder extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(view.getContext(), GameRegister.class);
-                intent.putExtra("userID", "131....");
                 startActivityForResult(intent, MainActivity.ADAPTER_RELOAD);
             }
         });

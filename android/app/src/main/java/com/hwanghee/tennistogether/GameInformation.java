@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.async.http.socketio.ExceptionCallback;
@@ -36,7 +37,14 @@ public class GameInformation extends AppCompatActivity {
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
-                        updateView(result);
+                        if(result==null) {
+                            Toast.makeText(getApplicationContext(), "The game has been removed", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent();
+                            setResult(RESULT_OK, intent);
+                            finish();
+                        } else {
+                            updateView(result);
+                        }
                     }
                 });
 
@@ -68,7 +76,58 @@ public class GameInformation extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        if(alreadyInGame(gamedata)) {
+            findViewById(R.id.gameinfo_cancel).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.gameinfo_cancel).setVisibility(View.GONE);
+        }
+
+        findViewById(R.id.gameinfo_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(gamedata.get("player1").getAsString().equals(MainActivity.userID)) {
+                    Ion.with(getApplicationContext()).load(MainActivity.serverURL+"/game/drop/"+gameID)
+                            .asJsonObject().setCallback(new FutureCallback<JsonObject>() {
+                        @Override
+                        public void onCompleted(Exception e, JsonObject result) {
+                            Toast.makeText(getApplicationContext(), "Game has been canceled", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent();
+                            setResult(RESULT_OK, intent);
+                            finish();
+                        }
+                    });
+                } else {
+                    Ion.with(getApplicationContext())
+                            .load(MainActivity.serverURL+"/game/cancel/"+gameID +"/"+MainActivity.userID)
+                            .asJsonObject().setCallback(new FutureCallback<JsonObject>() {
+                        @Override
+                        public void onCompleted(Exception e, JsonObject result) {
+                            Toast.makeText(getApplicationContext(), "You cancel the game", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent();
+                            setResult(RESULT_OK, intent);
+                            finish();
+                        }
+                    });
+                }
+            }
+        });
+
+        if(gamedata.get("player1").equals(MainActivity.userID)) {
+            findViewById(R.id.gameinfo_finish).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.gameinfo_finish).setVisibility(View.GONE);
+        }
+
+        findViewById(R.id.gameinfo_finish).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO : Show result dialog
+            }
+        });
     }
+
+    private boolean isLoggedin() { return AccessToken.getCurrentAccessToken() != null; }
 
     private void updateUserInfo(final JsonObject gamedata, final int playernumber) {
         final String[] jsonname = {"", "player1", "player2", "player3", "player4"};
@@ -118,43 +177,58 @@ public class GameInformation extends AppCompatActivity {
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            AlertDialog.Builder alertdialog = new AlertDialog.Builder(new ContextThemeWrapper(GameInformation.this, R.style.AppTheme));
-                            alertdialog.setMessage("Want to join this game?");
-                            alertdialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Toast.makeText(getApplicationContext(), "JOINED!", Toast.LENGTH_SHORT).show();
-                                    JsonObject json = new JsonObject();
-                                    json.addProperty(jsonname[playernumber], MainActivity.userID);
+                            if(isLoggedin()==false) {
+                                Toast.makeText(getApplicationContext(), "You have to be logged in!", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
 
-                                    Ion.with(getApplicationContext()).load(MainActivity.serverURL+"/game/update/"+gameID)
-                                            .setJsonObjectBody(json).asJsonObject()
-                                            .setCallback(new FutureCallback<JsonObject>() {
-                                                @Override
-                                                public void onCompleted(Exception e, JsonObject result) {
-                                                    updateView(result);
-                                                    Intent intent = new Intent();
-                                                    intent.putExtra("gameID", gameID);
-                                                    intent.putExtra("playernumber", playernumber);
-                                                    intent.putExtra("playerID", player);
-                                                    setResult(RESULT_OK, intent);
-                                                    finish();
-                                                }
-                                            });
-                                }
-                            });
-                            alertdialog.setNegativeButton("Nope", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                }
-                            });
+                            if(alreadyInGame(gamedata)) {
+                                Toast.makeText(getApplicationContext(), "You are already in the game!", Toast.LENGTH_SHORT).show();
+                                return;
+                            } else {
+                                AlertDialog.Builder alertdialog = new AlertDialog.Builder(new ContextThemeWrapper(GameInformation.this, R.style.AppTheme));
+                                alertdialog.setMessage("Want to join this game?");
+                                alertdialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Toast.makeText(getApplicationContext(), "JOINED!", Toast.LENGTH_SHORT).show();
+                                        JsonObject json = new JsonObject();
+                                        json.addProperty(jsonname[playernumber], MainActivity.userID);
 
-                            AlertDialog alert = alertdialog.create();
-                            alert.setIcon(R.mipmap.ic_launcher);
-                            alert.setTitle("JOIN?");
-                            alert.show();
+                                        Ion.with(getApplicationContext()).load(MainActivity.serverURL+"/game/update/"+gameID)
+                                                .setJsonObjectBody(json).asJsonObject()
+                                                .setCallback(new FutureCallback<JsonObject>() {
+                                                    @Override
+                                                    public void onCompleted(Exception e, JsonObject result) {
+                                                        updateView(result);
+                                                        Intent intent = new Intent();
+                                                        setResult(RESULT_OK, intent);
+                                                        finish();
+                                                    }
+                                                });
+                                    }
+                                });
+                                alertdialog.setNegativeButton("Nope", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                    }
+                                });
+
+                                AlertDialog alert = alertdialog.create();
+                                alert.setIcon(R.mipmap.ic_launcher);
+                                alert.setTitle("JOIN?");
+                                alert.show();
+                            }
                         }
                     });
         }
+    }
+
+    private boolean alreadyInGame(final JsonObject gamedata) {
+        if(gamedata.get("player1").getAsString().equals(MainActivity.userID)) return true;
+        if(gamedata.get("player2").getAsString().equals(MainActivity.userID)) return true;
+        if(gamedata.get("player3").getAsString().equals(MainActivity.userID)) return true;
+        if(gamedata.get("player4").getAsString().equals(MainActivity.userID)) return true;
+        return false;
     }
 }
