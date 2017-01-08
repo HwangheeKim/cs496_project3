@@ -40,7 +40,7 @@ public class UserInformation extends AppCompatActivity {
         InfoEditButton = (Button) findViewById(R.id.InfoEditButton);
         UserSpace = (Space) findViewById(R.id.UserSpace);
         UserSpace.getResources().getDrawable(R.drawable.border);
-        String userIDclicked = getIntent().getExtras().getString("UserID");
+        String userIDclicked = getIntent().getExtras().getString("userID");
 
         if(MainActivity.userID == userIDclicked) {
             findViewById(R.id.InfoEditButton).setVisibility(View.VISIBLE);

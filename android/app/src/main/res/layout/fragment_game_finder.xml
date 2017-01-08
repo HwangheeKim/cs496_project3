@@ -5,11 +5,19 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/gamefinder_list"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/gamefinder_swiperefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </android.support.v7.widget.RecyclerView>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/gamefinder_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </android.support.v7.widget.RecyclerView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
     <com.github.clans.fab.FloatingActionMenu
         android:layout_width="wrap_content"

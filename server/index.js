@@ -101,16 +101,21 @@ app.get('/user/:userID', function(req, res) {
     });
 });
 
+function notnull(str) {
+    if(str) return str;
+    return "";
+}
+
 // POST request for user enrollment
 app.post('/user/enroll', function(req, res) {
     console.log("[User/enroll] Got request");
     var newUser = {
         userID : req.body['userID'],
         name : req.body['name'],
-        picture : req.body['picture'],
-        email : req.body['email'],
-        group : req.body['group'],
-        phone : req.body['phone']
+        picture : notnull(req.body['picture']),
+        email : notnull(req.body['email']),
+        group : notnull(req.body['group']),
+        phone : notnull(req.body['phone'])
     };
 
     User.findOneAndUpdate( {userID : req.body['userID']}, newUser, {upsert: true, new: true}, function (err, result) {
@@ -146,6 +151,37 @@ app.post('/game/register', function(req, res) {
         res.writeHead(200, {'Content-Type':'application/json'});
         res.write(JSON.stringify({result: 'OK'}));
         res.end();
+    });
+});
+
+// POST request for game update
+app.post('/game/update/:gameID', function(req, res) {
+    console.log("[Game/update] Got request on " + req.params.gameID);
+
+    var updatedGame = {};
+
+    if(req.body['type']) updatedGame.type = req.body['type'];
+    if(req.body['playtime']) updatedGame.playtime = req.body['playtime'];
+    if(req.body['player1']) updatedGame.player1 = req.body['player1'];
+    if(req.body['player2']) updatedGame.player2 = req.body['player2'];
+    if(req.body['player3']) updatedGame.player3 = req.body['player3'];
+    if(req.body['player4']) updatedGame.player4 = req.body['player4'];
+    if(req.body['court']) updatedGame.court = req.body['court'];
+    if(req.body['winner']) updatedGame.winner = req.body['winner'];
+    if(req.body['isMatched']) updatedGame.isMatched = req.body['isMatched'];
+    if(req.body['score']) updatedGame.score = req.body['score'];
+
+    console.log("[Game/update] " + JSON.stringify(updatedGame));
+    Game.update({_id:req.params.gameID}, updatedGame, {upsert:false}, function(err, result) {
+        if (err) throw err;
+
+        Game.findById(req.params.gameID, function(err, result1){
+            if (err) throw err;
+
+            res.writeHead(200, {'Content-Type':'application/json'});
+            res.write(JSON.stringify(result1));
+            res.end();
+        });
     });
 });
 

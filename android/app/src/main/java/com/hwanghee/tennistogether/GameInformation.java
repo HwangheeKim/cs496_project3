@@ -79,7 +79,7 @@ public class GameInformation extends AppCompatActivity {
         final int[] imgID = {0, R.id.gameinfo_img1, R.id.gameinfo_img2, R.id.gameinfo_img3, R.id.gameinfo_img4};
         final int[] emptyID = {0, R.id.gameinfo_empty1, R.id.gameinfo_empty2, R.id.gameinfo_empty3, R.id.gameinfo_empty4};
 
-        String player = gamedata.get(jsonname[playernumber]).getAsString();
+        final String player = gamedata.get(jsonname[playernumber]).getAsString();
         if(player.length()>0) {
             findViewById(infoID[playernumber]).setVisibility(View.VISIBLE);
             findViewById(emptyID[playernumber]).setVisibility(View.INVISIBLE);
@@ -93,7 +93,6 @@ public class GameInformation extends AppCompatActivity {
                                         URLDecoder.decode(result.get("name").getAsString(), "utf-8"));
                                 ((TextView)findViewById(groupID[playernumber])).setText(
                                         URLDecoder.decode(result.get("group").getAsString(), "utf-8"));
-                                Log.d("Ion will update", result.get("picture").getAsString());
                                 Picasso.with(getApplicationContext()).load(result.get("picture").getAsString())
                                         .into((ImageView)findViewById(imgID[playernumber]));
                             } catch (Exception e1) {
@@ -125,10 +124,23 @@ public class GameInformation extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     Toast.makeText(getApplicationContext(), "JOINED!", Toast.LENGTH_SHORT).show();
-                                    // TODO : Send information to server
+                                    JsonObject json = new JsonObject();
+                                    json.addProperty(jsonname[playernumber], MainActivity.userID);
 
-                                    
-                                    updateUserInfo(gamedata, playernumber);
+                                    Ion.with(getApplicationContext()).load(MainActivity.serverURL+"/game/update/"+gameID)
+                                            .setJsonObjectBody(json).asJsonObject()
+                                            .setCallback(new FutureCallback<JsonObject>() {
+                                                @Override
+                                                public void onCompleted(Exception e, JsonObject result) {
+                                                    updateView(result);
+                                                    Intent intent = new Intent();
+                                                    intent.putExtra("gameID", gameID);
+                                                    intent.putExtra("playernumber", playernumber);
+                                                    intent.putExtra("playerID", player);
+                                                    setResult(RESULT_OK, intent);
+                                                    finish();
+                                                }
+                                            });
                                 }
                             });
                             alertdialog.setNegativeButton("Nope", new DialogInterface.OnClickListener() {

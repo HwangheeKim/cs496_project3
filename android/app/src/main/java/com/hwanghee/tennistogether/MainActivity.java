@@ -36,12 +36,15 @@ public class MainActivity extends AppCompatActivity
                     MyInfo.OnFragmentInteractionListener{
 
     static int REQUEST_LOGIN = 0xabcd;
+    static int ADAPTER_RELOAD = 0xabcc;
     static String userName = "Username";
     static String userID = "";
     static String userEmail = "something@some.thing";
     static String serverURL = "http://52.78.101.202:3000";
     private DrawerLayout drawerLayout;
     private NavigationView navView;
+
+    private GameFinder gameFinder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,19 +64,19 @@ public class MainActivity extends AppCompatActivity
             public void onInitialized() {
                 if(isLoggedIn()) {
                     updateMyprofile(false);
-                    Snackbar.make(navView, "Welcome Back, " + userName + "!", Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
+
+        gameFinder = new GameFinder();
 
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 item.setChecked(true);
                 if(item.getItemId() == R.id.drawer_gamefinder) {
-                    Fragment newFragment = new GameFinder();
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.main_container, newFragment).commit();
+                            .replace(R.id.main_container, gameFinder).commit();
                 } else if(item.getItemId() == R.id.drawer_courtfinder) {
                     Fragment newFragment = new CourtFinder();
                     getSupportFragmentManager().beginTransaction()
@@ -99,13 +102,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if(resultCode != RESULT_OK) {
             return;
         }
-
         if(requestCode == REQUEST_LOGIN) {
             updateMyprofile(true);
+        } else if(requestCode == ADAPTER_RELOAD) {
+            gameFinder.loadGameData(getCurrentFocus());
         }
     }
 
@@ -129,6 +132,9 @@ public class MainActivity extends AppCompatActivity
                             e.printStackTrace();
                         }
 
+                        if(!isFirsttime) {
+                            Snackbar.make(navView, "Welcome Back, " + userName + "!", Snackbar.LENGTH_SHORT).show();
+                        }
                         enrollMe();
                     }
                 }
