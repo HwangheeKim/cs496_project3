@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="100dp"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:text="Game Type"/>
+
+        <CheckBox
+            android:id="@+id/gamefilter_single"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SINGLE"/>
+
+        <CheckBox
+            android:id="@+id/gamefilter_double"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DOUBLE"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Status" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/gamefilter_"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="All Games"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Joinable Games"/>
+        </RadioGroup>
+
+    </LinearLayout>
+
+</LinearLayout>

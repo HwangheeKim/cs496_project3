@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.facebook.AccessToken;
 import com.github.clans.fab.FloatingActionButton;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -25,6 +27,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class GameFinder extends Fragment {
     public static GameAdapter mAdapter;
+    public static int GAME_FILTERING = 0x0201;
     private OnFragmentInteractionListener mListener;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
@@ -59,7 +62,6 @@ public class GameFinder extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(view.getContext(), GameRegister.class);
-                intent.putExtra("userID", "131....");
                 startActivityForResult(intent, MainActivity.ADAPTER_RELOAD);
             }
         });
@@ -68,7 +70,10 @@ public class GameFinder extends Fragment {
         searchGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadGameData(view);
+                FragmentManager fm = getFragmentManager();
+                GameFilteringDialog dialogFragment = new GameFilteringDialog();
+                dialogFragment.setTargetFragment(GameFinder.this, GAME_FILTERING);
+                dialogFragment.show(fm, "SAMPLE FRAGMENT");
             }
         });
 
@@ -113,6 +118,9 @@ public class GameFinder extends Fragment {
         }
         if(requestCode == MainActivity.ADAPTER_RELOAD) {
             loadGameData(this.getView());
+        } else if(requestCode == GAME_FILTERING) {
+            loadGameData(this.getView());
+            // TODO : filter the adapter with given options
         }
     }
 

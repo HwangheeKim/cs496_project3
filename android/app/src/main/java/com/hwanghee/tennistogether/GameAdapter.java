@@ -2,6 +2,7 @@ package com.hwanghee.tennistogether;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.Image;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.CardView;
@@ -49,6 +50,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameViewHolder> {
         setImage(holder.player2Image, gameDatas.get(position).getPlayer2());
         setImage(holder.player3Image, gameDatas.get(position).getPlayer3());
         setImage(holder.player4Image, gameDatas.get(position).getPlayer4());
+
         if(gameDatas.get(position).getType()) {
             holder.player2Image.setVisibility(View.GONE);
             holder.player4Image.setVisibility(View.GONE);
@@ -56,14 +58,21 @@ public class GameAdapter extends RecyclerView.Adapter<GameViewHolder> {
             holder.player2Image.setVisibility(View.VISIBLE);
             holder.player4Image.setVisibility(View.VISIBLE);
         }
-        holder.gameItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), GameInformation.class);
-                intent.putExtra("gameID", GameFinder.mAdapter.get(position).getGameID());
-                ((Activity)v.getContext()).startActivityForResult(intent, MainActivity.ADAPTER_RELOAD);
-            }
-        });
+
+        if(!gameDatas.get(position).getScore().equals("")) {
+            holder.gameItem.setCardBackgroundColor(Color.GRAY);
+            holder.gameItem.setOnClickListener(null);
+        } else {
+            holder.gameItem.setCardBackgroundColor(Color.WHITE);
+            holder.gameItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), GameInformation.class);
+                    intent.putExtra("gameID", GameFinder.mAdapter.get(position).getGameID());
+                    ((Activity)v.getContext()).startActivityForResult(intent, MainActivity.ADAPTER_RELOAD);
+                }
+            });
+        }
     }
 
     private void setImage(final ImageView imageView, String userID) {
