@@ -87,13 +87,47 @@ public class UserInformation extends AppCompatActivity {
             InfoEditButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(intent);
+
+                    intent.putExtra("Phone", userPhone);
+                    intent.putExtra("Group", userGroup);
+                    startActivityForResult(intent, 35);
                 }
             });
         } else {
             findViewById(R.id.InfoEditButton).setVisibility(View.GONE);
         }
-        Toast.makeText(getApplicationContext(), userIDclicked , Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getApplicationContext(), userIDclicked , Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == 35) {
+            updateview();
+//            setContentView(R.layout.activity_user_information);
+        }
+    }
+
+    public void updateview(){
+        loadInfoView();
+        loadInfoData();
+
+        intent = new Intent(getApplicationContext(), ProfileEdition.class);
+
+
+        if(MainActivity.userID.equals(userIDclicked)) {
+            findViewById(R.id.InfoEditButton).setVisibility(View.VISIBLE);
+
+            InfoEditButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivityForResult(intent, 35);
+                }
+            });
+        } else {
+            findViewById(R.id.InfoEditButton).setVisibility(View.GONE);
+        }
+//        Toast.makeText(getApplicationContext(), userIDclicked , Toast.LENGTH_SHORT).show();
     }
 
 
@@ -133,12 +167,10 @@ public class UserInformation extends AppCompatActivity {
                         } catch (Exception e1) {
                             e1.printStackTrace();
                         }
-                        intent.putExtra("Phone", userPhone);
-                        intent.putExtra("Group", userGroup);
                         userName = result.get("name").getAsString();
                         userPhone = result.get("phone").getAsString();
-                        Toast.makeText(getApplicationContext(), userPhone, Toast.LENGTH_SHORT).show();
-                        userGroup = result.get("group").getAsString();
+//                        Toast.makeText(getApplicationContext(), userPhone, Toast.LENGTH_SHORT).show();
+                        userGroup = groupDecoded;
                         UItv1.setText(nameDecoded);
                         UItv2.setText(userPhone);
                         UItv3.setText(groupDecoded);
