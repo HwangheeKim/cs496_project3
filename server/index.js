@@ -3,6 +3,12 @@ var multer = require('multer');
 var bodyParser = require('body-parser');
 var path = require('path');
 var fs = require('fs');
+var http = require('http');
+var https = require('https');
+var FCM = require('fcm-push');
+var serverKey = 'AAAAHccdtZc:APA91bHQk-WzrFgv0YizDarCa9AuOV61d7Bv7CUkY7HMhxcShwenrVZqmF8day-vWoVq6HNlB7wlm57raeS2hGROCZqImSiWgLJoZ9IEoMNeDldNZpNsx9RBUvGms9ooBcDqAm5TgWVp';
+var fcm = new FCM(serverKey);
+
 var storage = multer.diskStorage({
     destination: function(req, file, cb) {
         cb(null, 'upload/'); 
@@ -24,6 +30,7 @@ var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
     userID : {type:String, required:true},
+    userToken : {type:String, required:true},
     name : {type:String, required:true},
     picture : {type:String, default:"http://www.ogubin.com/images/empty_profile2.png"},
     email : {type:String, default:""},
@@ -60,6 +67,18 @@ var Court = mongoose.model('court', courtSchema, 'court');
 // Get request for all game information
 app.get('/game/all', function(req, res) {
     Game.find({}, function(err, results) {
+        if (err) throw err;
+        
+        res.writeHead(200, {'Content-Type':'application/json'});
+        res.write(JSON.stringify(results));
+        res.end();
+    });
+});
+
+
+// Get request for all game information
+app.get('/game/ongoing', function(req, res) {
+    Game.find({score:""}, function(err, results) {
         if (err) throw err;
         
         res.writeHead(200, {'Content-Type':'application/json'});
@@ -116,6 +135,7 @@ app.post('/user/enroll', function(req, res) {
             var newUser = {};
             
             if(req.body['name']) newUser.name=req.body['name'];
+            if(req.body['userToken']) newUser.userToken = req.body['userToken'];
             if(req.body['picture']) newUser.picture=req.body['picture'];
             if(req.body['email']) newUser.email=req.body['email'];
             if(req.body['group']) newUser.group=req.body['group'];
@@ -128,6 +148,7 @@ app.post('/user/enroll', function(req, res) {
         } else {
             var newUser = {
                 userID : req.body['userID'],
+                userToken : req.body['userToken'],
                 name : req.body['name'],
                 picture : notnull(req.body['picture']),
                 email : notnull(req.body['email']),
@@ -202,6 +223,42 @@ app.post('/game/update/:gameID', function(req, res) {
         });
     });
 });
+
+// GET request for push notification
+app.get('/game/notifyjoin/:gameID/:userID', function(req, res) {
+    console.log("[Game/notify] Get noti request :) on " + req.params.gameID + " # " + req.params.userID);
+    Game.findOne({_id:req.params.gameID}, function(err, result1) {
+        if (err) throw err;
+
+        var target = [];
+        if(result1['player1']!="" && result1['player1']!=req.params.userID) notifyJoin(result1['player1']);
+        if(result1['player2']!="" && result1['player2']!=req.params.userID) notifyJoin(result1['player2']);
+        if(result1['player3']!="" && result1['player3']!=req.params.userID) notifyJoin(result1['player3']);
+        if(result1['player4']!="" && result1['player4']!=req.params.userID) notifyJoin(result1['player4']);
+    });
+});
+
+
+function notifyJoin(userID) {
+    User.findOne({userID:userID}, function(err, result) {
+        if (err) throw err;
+        
+        var message = {
+            to: result['userToken'],
+            priority: "high",
+            notification: {
+                title: "Tennis Together",
+                body: "New player joined your game!"
+            }
+        };
+
+        fcm.send(message, function(err, res) {
+            if (err) throw err;
+            console.log("Successfully sent with response: ", res);
+        })
+    });
+}
+
 
 // GET request for game drop
 app.get('/game/drop/:gameID', function(req, res) {

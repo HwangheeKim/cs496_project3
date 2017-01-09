@@ -15,11 +15,13 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity
     static String userID = "";
     static String userEmail = "something@some.thing";
     static String serverURL = "http://52.78.101.202:3000";
+    static String userToken = "";
     private DrawerLayout drawerLayout;
     private NavigationView navView;
 
@@ -109,7 +112,7 @@ public class MainActivity extends AppCompatActivity
             updateMyprofile(true);
         } else if(requestCode == ADAPTER_RELOAD) {
             gameFinder.loadGameData(getCurrentFocus());
-            myGameFinder.loadGameData(getCurrentFocus());
+//            myGameFinder.loadGameData(getCurrentFocus());
         }
     }
 
@@ -151,6 +154,7 @@ public class MainActivity extends AppCompatActivity
 
         try {
             json.addProperty("userID", userID);
+            json.addProperty("userToken", FirebaseInstanceId.getInstance().getToken());
             json.addProperty("name", URLEncoder.encode(userName, "utf-8"));
             json.addProperty("email", userEmail);
             json.addProperty("picture", "https://graph.facebook.com/" + userID + "/picture?height=500");

@@ -224,6 +224,15 @@ public class GameInformation extends AppCompatActivity {
                                         JsonObject json = new JsonObject();
                                         json.addProperty(jsonname[playernumber], MainActivity.userID);
 
+                                        Ion.with(getApplicationContext())
+                                                .load(MainActivity.serverURL+"/game/notifyjoin/"+gameID+"/"+MainActivity.userID)
+                                                .asJsonObject().setCallback(new FutureCallback<JsonObject>() {
+                                            @Override
+                                            public void onCompleted(Exception e, JsonObject result) {
+
+                                            }
+                                        });
+
                                         Ion.with(getApplicationContext()).load(MainActivity.serverURL+"/game/update/"+gameID)
                                                 .setJsonObjectBody(json).asJsonObject()
                                                 .setCallback(new FutureCallback<JsonObject>() {
