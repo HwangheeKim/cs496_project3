@@ -74,7 +74,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameViewHolder> {
             holder.gameItem.setOnClickListener(null);
         } else {
             if(gameDatas.get(position).isJoined()) {
-                holder.gameItem.setCardBackgroundColor(Color.rgb(0x9f,0xbf,0xf2));
+                holder.gameItem.setCardBackgroundColor(Color.rgb(0xbb,0xcc,0xff));
             } else {
                 holder.gameItem.setCardBackgroundColor(Color.WHITE);
             }

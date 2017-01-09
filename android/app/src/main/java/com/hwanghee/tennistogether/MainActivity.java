@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
@@ -32,7 +31,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 public class MainActivity extends AppCompatActivity
-        implements GameFinder.OnFragmentInteractionListener, CourtFinder.OnFragmentInteractionListener,
+        implements GameFinder.OnFragmentInteractionListener, MyGameFinder.OnFragmentInteractionListener,
                     MyInfo.OnFragmentInteractionListener{
 
     static int REQUEST_LOGIN = 0xabcd;
@@ -45,6 +44,7 @@ public class MainActivity extends AppCompatActivity
     private NavigationView navView;
 
     private GameFinder gameFinder;
+    private MyGameFinder myGameFinder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity
         });
 
         gameFinder = new GameFinder();
+        myGameFinder = new MyGameFinder();
 
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -78,9 +79,8 @@ public class MainActivity extends AppCompatActivity
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.main_container, gameFinder).commit();
                 } else if(item.getItemId() == R.id.drawer_courtfinder) {
-                    Fragment newFragment = new CourtFinder();
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.main_container, newFragment).commit();
+                            .replace(R.id.main_container, myGameFinder).commit();
                 } else if(item.getItemId() == R.id.drawer_login) {
                     if(isLoggedIn()) {
                         Snackbar.make(navView, "Already Logged in!", Snackbar.LENGTH_SHORT).show();
@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity
             updateMyprofile(true);
         } else if(requestCode == ADAPTER_RELOAD) {
             gameFinder.loadGameData(getCurrentFocus());
+            myGameFinder.loadGameData(getCurrentFocus());
         }
     }
 
