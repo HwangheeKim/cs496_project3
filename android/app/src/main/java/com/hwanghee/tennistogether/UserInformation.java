@@ -1,5 +1,6 @@
 package com.hwanghee.tennistogether;
 
+import android.content.Intent;
 import android.text.Layout;
 import android.util.Log;
 import android.widget.Space;
@@ -37,6 +38,7 @@ public class UserInformation extends AppCompatActivity {
     String userPhone;
     String userGroup;
     String userRecord;
+    Intent intent;
 //    private ArrayList<InfoData> infoDatas;
 //    public UserInformation() {infoDatas = new ArrayList<GameData>();}
 //    public UserInformation(ArrayList<InfoData> infoDatas) {
@@ -68,18 +70,30 @@ public class UserInformation extends AppCompatActivity {
 
 
 
-        if(MainActivity.userID.equals(userIDclicked)) {
-            findViewById(R.id.InfoEditButton).setVisibility(View.VISIBLE);
-        } else {
-            findViewById(R.id.InfoEditButton).setVisibility(View.GONE);
-        }
-        Toast.makeText(getApplicationContext(), userIDclicked , Toast.LENGTH_SHORT).show();
+
         //Toast.makeText(getApplicationContext(), MainActivity.userID , Toast.LENGTH_SHORT).show();
 
         this.loadInfoView();
         this.loadInfoData();
 
 //        setContentView(R.layout.activity_user_information);
+
+        intent = new Intent(getApplicationContext(), ProfileEdition.class);
+
+
+        if(MainActivity.userID.equals(userIDclicked)) {
+            findViewById(R.id.InfoEditButton).setVisibility(View.VISIBLE);
+
+            InfoEditButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(intent);
+                }
+            });
+        } else {
+            findViewById(R.id.InfoEditButton).setVisibility(View.GONE);
+        }
+        Toast.makeText(getApplicationContext(), userIDclicked , Toast.LENGTH_SHORT).show();
     }
 
 
@@ -119,12 +133,15 @@ public class UserInformation extends AppCompatActivity {
                         } catch (Exception e1) {
                             e1.printStackTrace();
                         }
+                        intent.putExtra("Phone", userPhone);
+                        intent.putExtra("Group", userGroup);
                         userName = result.get("name").getAsString();
                         userPhone = result.get("phone").getAsString();
+                        Toast.makeText(getApplicationContext(), userPhone, Toast.LENGTH_SHORT).show();
                         userGroup = result.get("group").getAsString();
-                        UItv1.setText(userName);
+                        UItv1.setText(nameDecoded);
                         UItv2.setText(userPhone);
-                        UItv3.setText(userGroup);
+                        UItv3.setText(groupDecoded);
                     }
                 });
 
