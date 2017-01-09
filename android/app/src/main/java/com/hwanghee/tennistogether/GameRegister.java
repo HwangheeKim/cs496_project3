@@ -162,7 +162,7 @@ public class GameRegister extends AppCompatActivity {
 
 
         GRtv1.setText(Integer.toString(this.year));
-        GRtv2.setText(Integer.toString(this.month));
+        GRtv2.setText(Integer.toString(this.month+1));
         GRtv3.setText(Integer.toString(this.day));
     }
 

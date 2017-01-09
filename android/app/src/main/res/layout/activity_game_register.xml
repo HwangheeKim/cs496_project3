@@ -11,13 +11,21 @@
 
     <TextView
         android:text="경기 설정"
+        android:textSize="30dp"
+        android:textColor="@color/com_facebook_blue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textViewGR1"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
          />
 
     <TextView
         android:text="경기 방식"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textViewGR2"
@@ -51,9 +59,12 @@
 
     <TextView
         android:text="경기 날짜"
+        android:textSize="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textViewGR3"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
          />
 
     <RelativeLayout
@@ -63,7 +74,9 @@
 
 
         <TextView
-            android:text="YY"
+            android:text="YY "
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/textViewYY"
@@ -74,14 +87,16 @@
             />
 
         <TextView
-            android:text="년"
+            android:text="년   "
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_toRightOf="@+id/textViewYY"
             android:id="@+id/textView년" />
 
         <TextView
-            android:text="MM"
+            android:text="MM "
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignBottom="@+id/textView년"
@@ -90,16 +105,17 @@
             android:id="@+id/textViewMM" />
 
         <TextView
-            android:text="월"
+            android:text="월   "
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_alignTop="@+id/textViewMM"
-            android:layout_toRightOf="@+id/textViewMM"
             android:layout_toEndOf="@+id/textViewMM"
-            android:id="@+id/textView월" />
+            android:id="@+id/textView월"
+            android:layout_alignTop="@+id/textViewMM"
+            android:layout_toRightOf="@+id/textViewMM" />
 
         <TextView
-            android:text="DD"
+            android:text="DD "
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignBottom="@+id/textView월"
@@ -111,27 +127,31 @@
             android:text="일"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_alignTop="@+id/textViewDD"
-            android:layout_toRightOf="@+id/textViewDD"
             android:layout_toEndOf="@+id/textViewDD"
-            android:id="@+id/textView일" />
+            android:id="@+id/textView일"
+            android:layout_alignTop="@+id/textViewDD"
+            android:layout_toRightOf="@+id/textViewDD" />
 
 
     </RelativeLayout>
 
     <TextView
         android:text="경기 시간"
+        android:textSize="20dp"
+        android:layout_marginLeft="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textView14" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="139dp"
+        android:layout_height="102dp"
         android:id="@+id/RL2">
 
         <TextView
-            android:text="오전/오후"
+            android:text="오전/오후   "
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/textViewAMPM"
@@ -142,14 +162,16 @@
             />
 
         <TextView
-            android:text="HH"
+            android:text="HH "
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_toRightOf="@+id/textViewAMPM"
             android:id="@+id/textViewHH" />
 
         <TextView
-            android:text="시"
+            android:text="시   "
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignBottom="@+id/textViewHH"
@@ -158,16 +180,17 @@
             android:id="@+id/textView시" />
 
         <TextView
-            android:text="MM"
+            android:text="MM "
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_alignTop="@+id/textView시"
-            android:layout_toRightOf="@+id/textView시"
             android:layout_toEndOf="@+id/textView시"
-            android:id="@+id/textViewMM2" />
+            android:id="@+id/textViewMM2"
+            android:layout_alignTop="@+id/textView시"
+            android:layout_toRightOf="@+id/textView시" />
 
         <TextView
-            android:text="분"
+            android:text="분   "
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignBottom="@+id/textViewMM2"
@@ -179,11 +202,15 @@
 
     <TextView
         android:text="경기 장소"
+        android:textSize="20dp"
+        android:layout_marginLeft="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textView15" />
 
     <EditText
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
