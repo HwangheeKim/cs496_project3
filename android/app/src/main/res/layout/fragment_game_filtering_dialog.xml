@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical">
@@ -19,18 +20,20 @@
             android:id="@+id/gamefilter_single"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="true"
             android:text="SINGLE"/>
 
         <CheckBox
             android:id="@+id/gamefilter_double"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="true"
             android:text="DOUBLE"/>
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical">
@@ -44,20 +47,29 @@
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checkedButton="@+id/gamefilter_all"
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/gamefilter_"
+                android:id="@+id/gamefilter_all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="All Games"/>
+                android:text="All"/>
 
             <RadioButton
+                android:id="@+id/gamefilter_joinable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Joinable Games"/>
+                android:text="Joinable"/>
         </RadioGroup>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/gamefilter_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Search"/>
 
 </LinearLayout>

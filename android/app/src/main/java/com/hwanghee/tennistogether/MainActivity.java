@@ -21,6 +21,7 @@ import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -32,7 +33,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 public class MainActivity extends AppCompatActivity
-        implements GameFinder.OnFragmentInteractionListener, CourtFinder.OnFragmentInteractionListener,
+        implements GameFinder.OnFragmentInteractionListener, MyGameFinder.OnFragmentInteractionListener,
                     MyInfo.OnFragmentInteractionListener{
 
     static int REQUEST_LOGIN = 0xabcd;
@@ -41,10 +42,12 @@ public class MainActivity extends AppCompatActivity
     static String userID = "";
     static String userEmail = "something@some.thing";
     static String serverURL = "http://52.78.101.202:3000";
+    static String userToken = "";
     private DrawerLayout drawerLayout;
     private NavigationView navView;
 
     private GameFinder gameFinder;
+    private MyGameFinder myGameFinder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +72,7 @@ public class MainActivity extends AppCompatActivity
         });
 
         gameFinder = new GameFinder();
+        myGameFinder = new MyGameFinder();
 
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -78,9 +82,8 @@ public class MainActivity extends AppCompatActivity
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.main_container, gameFinder).commit();
                 } else if(item.getItemId() == R.id.drawer_courtfinder) {
-                    Fragment newFragment = new CourtFinder();
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.main_container, newFragment).commit();
+                            .replace(R.id.main_container, myGameFinder).commit();
                 } else if(item.getItemId() == R.id.drawer_login) {
                     if(isLoggedIn()) {
                         Snackbar.make(navView, "Already Logged in!", Snackbar.LENGTH_SHORT).show();
@@ -109,6 +112,7 @@ public class MainActivity extends AppCompatActivity
             updateMyprofile(true);
         } else if(requestCode == ADAPTER_RELOAD) {
             gameFinder.loadGameData(getCurrentFocus());
+//            myGameFinder.loadGameData(getCurrentFocus());
         }
     }
 
@@ -150,6 +154,7 @@ public class MainActivity extends AppCompatActivity
 
         try {
             json.addProperty("userID", userID);
+            json.addProperty("userToken", FirebaseInstanceId.getInstance().getToken());
             json.addProperty("name", URLEncoder.encode(userName, "utf-8"));
             json.addProperty("email", userEmail);
             json.addProperty("picture", "https://graph.facebook.com/" + userID + "/picture?height=500");

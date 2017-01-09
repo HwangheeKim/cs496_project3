@@ -1,11 +1,9 @@
 package com.hwanghee.tennistogether;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,8 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.facebook.AccessToken;
-import com.github.clans.fab.FloatingActionButton;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
@@ -23,18 +19,26 @@ import com.koushikdutta.ion.Ion;
 
 import java.net.URLDecoder;
 
-import static android.app.Activity.RESULT_OK;
 
-public class GameFinder extends Fragment {
-    public static GameAdapter mAdapter;
-    public static int GAME_FILTERING = 0x0201;
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link MyGameFinder.OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ * Use the {@link MyGameFinder#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class MyGameFinder extends Fragment {
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    public static GameAdapter mAdapter = GameFinder.mAdapter;
     private OnFragmentInteractionListener mListener;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
-    private boolean[] options = {true, true, true};
-    // Single Game, Double Game, All/Joinable Game
+    public MyGameFinder() {
+        // Required empty public constructor
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,38 +60,9 @@ public class GameFinder extends Fragment {
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
-
-
         loadGameData(view);
-
-        FloatingActionButton registerGame = (FloatingActionButton)view.findViewById(R.id.gamefinder_add);
-        registerGame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(view.getContext(), GameRegister.class);
-                startActivityForResult(intent, MainActivity.ADAPTER_RELOAD);
-            }
-        });
-
-        FloatingActionButton searchGame = (FloatingActionButton)view.findViewById(R.id.gamefinder_search);
-        searchGame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fm = getFragmentManager();
-                GameFilteringDialog dialogFragment = new GameFilteringDialog();
-                Bundle args = new Bundle();
-                args.putBoolean("single", options[0]);
-                args.putBoolean("double", options[1]);
-                args.putBoolean("status", options[2]);
-                dialogFragment.setArguments(args);
-                dialogFragment.setTargetFragment(GameFinder.this, GAME_FILTERING);
-                dialogFragment.show(fm, "SAMPLE FRAGMENT");
-            }
-        });
-
         return view;
     }
-
 
     public void loadGameData(View view) {
         mAdapter.clear();
@@ -114,18 +89,10 @@ public class GameFinder extends Fragment {
                                     record.get("player2").getAsString(), record.get("player3").getAsString(),
                                     record.get("player4").getAsString());
 
-                            if((mAdapter.get(i).getType()==true && options[0]==false) ||
-                                    (mAdapter.get(i).getType()==false && options[1]==false) ||
-                                    (isJoinable(record)==false && options[2]==false)) {
-                                mAdapter.get(i).setVisible(false);
-                            } else {
+                            if(alreadyInGame(record)) {
                                 mAdapter.get(i).setVisible(true);
                             }
-
-                            if(alreadyInGame(record)) {
-                                mAdapter.get(i).setJoined(true);
-                            }
-                            else mAdapter.get(i).setJoined(false);
+                            else mAdapter.get(i).setVisible(false);
                         }
                     }
                 });
@@ -151,29 +118,6 @@ public class GameFinder extends Fragment {
         if(gamedata.get("player3").getAsString().equals(MainActivity.userID)) return true;
         if(gamedata.get("player4").getAsString().equals(MainActivity.userID)) return true;
         return false;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode != RESULT_OK) {
-            return;
-        }
-        if(requestCode == MainActivity.ADAPTER_RELOAD) {
-            loadGameData(this.getView());
-        } else if(requestCode == GAME_FILTERING) {
-            options[0] = data.getExtras().getBoolean("single");
-            options[1] = data.getExtras().getBoolean("double");
-            options[2] = data.getExtras().getBoolean("status");
-            loadGameData(this.getView());
-        }
-    }
-
-    // Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
