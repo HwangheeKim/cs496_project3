@@ -29,6 +29,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/PEet1"
+        android:inputType="phone"
+        android:digits="0123456789+"
         />
 
     <TextView
