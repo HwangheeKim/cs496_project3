@@ -109,20 +109,38 @@ function notnull(str) {
 // POST request for user enrollment
 app.post('/user/enroll', function(req, res) {
     console.log("[User/enroll] Got request");
-    var newUser = {
-        userID : req.body['userID'],
-        name : req.body['name'],
-        picture : notnull(req.body['picture']),
-        email : notnull(req.body['email']),
-        group : notnull(req.body['group']),
-        phone : notnull(req.body['phone'])
-    };
 
-    User.findOneAndUpdate( {userID : req.body['userID']}, newUser, {upsert: true, new: true}, function (err, result) {
-        if (err) throw err;
-        console.log("DONE PROCESS " + result)
+    User.find({userID:req.body['userID']}, function(err, result) {
+        console.log("        " + result)
+        if(result.length>0) {
+            var newUser = {};
+            
+            if(req.body['name']) newUser.name=req.body['name'];
+            if(req.body['picture']) newUser.picture=req.body['picture'];
+            if(req.body['email']) newUser.email=req.body['email'];
+            if(req.body['group']) newUser.group=req.body['group'];
+            if(req.body['phone']) newUser.phone=req.body['phone'];
+
+            User.findOneAndUpdate( {userID:req.body['userID']}, newUser, {}, function (err, results) {
+                if (err) throw err;
+                console.log("DONE UPDATE USER " + results);
+            });
+        } else {
+            var newUser = {
+                userID : req.body['userID'],
+                name : req.body['name'],
+                picture : notnull(req.body['picture']),
+                email : notnull(req.body['email']),
+                group : notnull(req.body['group']),
+                phone : notnull(req.body['phone'])
+            };
+
+            User.findOneAndUpdate( {userID : req.body['userID']}, newUser, {upsert: true, new: true}, function (err, results) {
+                if (err) throw err;
+                console.log("DONE ENROLL NEW USER " + results);
+            });
+        }
     });
-
 
     res.writeHead(200, {'Content-Type':'application/json'});
     res.write(JSON.stringify({result: 'OK'}));
@@ -167,7 +185,7 @@ app.post('/game/update/:gameID', function(req, res) {
     if(req.body['player3']) updatedGame.player3 = req.body['player3'];
     if(req.body['player4']) updatedGame.player4 = req.body['player4'];
     if(req.body['court']) updatedGame.court = req.body['court'];
-    if(req.body['winner']) updatedGame.winner = req.body['winner'];
+    if(req.body['winner']!=null) updatedGame.winner = req.body['winner'];
     if(req.body['isMatched']) updatedGame.isMatched = req.body['isMatched'];
     if(req.body['score']) updatedGame.score = req.body['score'];
 
@@ -180,6 +198,37 @@ app.post('/game/update/:gameID', function(req, res) {
 
             res.writeHead(200, {'Content-Type':'application/json'});
             res.write(JSON.stringify(result1));
+            res.end();
+        });
+    });
+});
+
+// GET request for game drop
+app.get('/game/drop/:gameID', function(req, res) {
+    console.log("[Game/drop] Got request on " + req.params.gameID);
+
+    Game.remove({_id : req.params.gameID}, function(err) {
+        if (err) throw err;
+
+        res.writeHead(200, {'Content-Type':'application/json'});
+        res.write(JSON.stringify({result:'OK'}));
+        res.end();
+    });
+});
+
+// GET request for unregister from the game
+app.get('/game/cancel/:gameID/:userID', function(req, res) {
+    console.log("[Game/cancel] Got request game " + req.params.gameID + " # userID " + req.params.userID);
+
+    Game.findOne({_id:req.params.gameID}, function(err, result) {
+        if(result['player2']==req.params.userID) result['player2'] = "";
+        if(result['player3']==req.params.userID) result['player3'] = "";
+        if(result['player4']==req.params.userID) result['player4'] = "";
+        Game.update({_id:req.params.gameID}, result, function(err, result1) {
+            if (err) throw err;
+
+            res.writeHead(200, {'Content-Type':'application/json'});
+            res.write(JSON.stringify({result:'OK'}));
             res.end();
         });
     });
