@@ -1,14 +1,21 @@
 package com.hwanghee.tennistogether;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.view.ContextThemeWrapper;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -113,7 +120,7 @@ public class GameInformation extends AppCompatActivity {
             }
         });
 
-        if(gamedata.get("player1").equals(MainActivity.userID)) {
+        if(gamedata.get("player1").getAsString().equals(MainActivity.userID)) {
             findViewById(R.id.gameinfo_finish).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.gameinfo_finish).setVisibility(View.GONE);
@@ -122,9 +129,31 @@ public class GameInformation extends AppCompatActivity {
         findViewById(R.id.gameinfo_finish).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO : Show result dialog
+                FragmentManager fm = getSupportFragmentManager();
+                GameResultDialog dialogFragment = new GameResultDialog();
+                Bundle args = new Bundle();
+                args.putBoolean("type", gamedata.get("type").getAsBoolean());
+                dialogFragment.setArguments(args);
+                dialogFragment.show(fm, "SAMPLE FRAGMENT");
             }
         });
+    }
+
+    public void updateScore(String result) {
+        JsonObject json = new JsonObject();
+        json.addProperty("score", result);
+        json.addProperty("winner", ScoreParser.winner(result));
+
+        Ion.with(getApplicationContext()).load(MainActivity.serverURL+"/game/update/"+gameID)
+                .setJsonObjectBody(json).asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        Intent intent = new Intent();
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    }
+                });
     }
 
     private boolean isLoggedin() { return AccessToken.getCurrentAccessToken() != null; }

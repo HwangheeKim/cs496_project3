@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +27,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class GameFinder extends Fragment {
     public static GameAdapter mAdapter;
+    public static int GAME_FILTERING = 0x0201;
     private OnFragmentInteractionListener mListener;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
@@ -68,7 +70,10 @@ public class GameFinder extends Fragment {
         searchGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadGameData(view);
+                FragmentManager fm = getFragmentManager();
+                GameFilteringDialog dialogFragment = new GameFilteringDialog();
+                dialogFragment.setTargetFragment(GameFinder.this, GAME_FILTERING);
+                dialogFragment.show(fm, "SAMPLE FRAGMENT");
             }
         });
 
@@ -113,6 +118,9 @@ public class GameFinder extends Fragment {
         }
         if(requestCode == MainActivity.ADAPTER_RELOAD) {
             loadGameData(this.getView());
+        } else if(requestCode == GAME_FILTERING) {
+            loadGameData(this.getView());
+            // TODO : filter the adapter with given options
         }
     }
 
