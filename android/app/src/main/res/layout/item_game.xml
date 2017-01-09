@@ -56,7 +56,7 @@
 
                     <ImageView
                         android:id="@+id/game_img1"
-                        android:src="@mipmap/ic_launcher"
+                        android:src="@drawable/ic_blank"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_margin="@dimen/gamefinder_profile_margin"
@@ -64,7 +64,7 @@
 
                     <ImageView
                         android:id="@+id/game_img2"
-                        android:src="@mipmap/ic_launcher"
+                        android:src="@drawable/ic_blank"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_margin="@dimen/gamefinder_profile_margin"
@@ -93,7 +93,7 @@
 
                     <ImageView
                         android:id="@+id/game_img3"
-                        android:src="@mipmap/ic_launcher"
+                        android:src="@drawable/ic_blank"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_margin="@dimen/gamefinder_profile_margin"
@@ -101,7 +101,7 @@
 
                     <ImageView
                         android:id="@+id/game_img4"
-                        android:src="@mipmap/ic_launcher"
+                        android:src="@drawable/ic_blank"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_margin="@dimen/gamefinder_profile_margin"

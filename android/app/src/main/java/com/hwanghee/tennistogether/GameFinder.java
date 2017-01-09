@@ -33,6 +33,9 @@ public class GameFinder extends Fragment {
     private LinearLayoutManager mLayoutManager;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
+    private boolean[] options = {true, true, true};
+    // Single Game, Double Game, All/Joinable Game
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -72,6 +75,11 @@ public class GameFinder extends Fragment {
             public void onClick(View v) {
                 FragmentManager fm = getFragmentManager();
                 GameFilteringDialog dialogFragment = new GameFilteringDialog();
+                Bundle args = new Bundle();
+                args.putBoolean("single", options[0]);
+                args.putBoolean("double", options[1]);
+                args.putBoolean("status", options[2]);
+                dialogFragment.setArguments(args);
                 dialogFragment.setTargetFragment(GameFinder.this, GAME_FILTERING);
                 dialogFragment.show(fm, "SAMPLE FRAGMENT");
             }
@@ -84,7 +92,7 @@ public class GameFinder extends Fragment {
     public void loadGameData(View view) {
         mAdapter.clear();
         Ion.with(view.getContext())
-                .load(MainActivity.serverURL + "/game/all")
+                .load(MainActivity.serverURL + "/game/ongoing")
                 .asJsonArray()
                 .setCallback(new FutureCallback<JsonArray>() {
                     @Override
@@ -105,9 +113,44 @@ public class GameFinder extends Fragment {
                                     record.get("score").getAsString(), record.get("player1").getAsString(),
                                     record.get("player2").getAsString(), record.get("player3").getAsString(),
                                     record.get("player4").getAsString());
+
+                            if((mAdapter.get(i).getType()==true && options[0]==false) ||
+                                    (mAdapter.get(i).getType()==false && options[1]==false) ||
+                                    (isJoinable(record)==false && options[2]==false)) {
+                                mAdapter.get(i).setVisible(false);
+                            } else {
+                                mAdapter.get(i).setVisible(true);
+                            }
+
+                            if(alreadyInGame(record)) {
+                                mAdapter.get(i).setJoined(true);
+                            }
+                            else mAdapter.get(i).setJoined(false);
                         }
                     }
                 });
+    }
+
+    private boolean isJoinable(final JsonObject gamedata) {
+        if(alreadyInGame(gamedata)) return false;
+        if(gamedata.get("type").getAsBoolean()) {
+            // Single game
+            if(gamedata.get("player3").getAsString().equals("")) return true;
+        } else {
+            // Double game
+            if(gamedata.get("player2").getAsString().equals("")) return true;
+            if(gamedata.get("player3").getAsString().equals("")) return true;
+            if(gamedata.get("player4").getAsString().equals("")) return true;
+        }
+        return false;
+    }
+
+    private boolean alreadyInGame(final JsonObject gamedata) {
+        if(gamedata.get("player1").getAsString().equals(MainActivity.userID)) return true;
+        if(gamedata.get("player2").getAsString().equals(MainActivity.userID)) return true;
+        if(gamedata.get("player3").getAsString().equals(MainActivity.userID)) return true;
+        if(gamedata.get("player4").getAsString().equals(MainActivity.userID)) return true;
+        return false;
     }
 
     @Override
@@ -119,8 +162,10 @@ public class GameFinder extends Fragment {
         if(requestCode == MainActivity.ADAPTER_RELOAD) {
             loadGameData(this.getView());
         } else if(requestCode == GAME_FILTERING) {
+            options[0] = data.getExtras().getBoolean("single");
+            options[1] = data.getExtras().getBoolean("double");
+            options[2] = data.getExtras().getBoolean("status");
             loadGameData(this.getView());
-            // TODO : filter the adapter with given options
         }
     }
 

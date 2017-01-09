@@ -21,6 +21,8 @@ import com.koushikdutta.ion.Ion;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by q on 2017-01-06.
@@ -44,6 +46,14 @@ public class GameAdapter extends RecyclerView.Adapter<GameViewHolder> {
     @Override
     public void onBindViewHolder(GameViewHolder holder, final int position) {
         GameData gameData = gameDatas.get(position);
+
+        if(!gameDatas.get(position).isVisible()){
+            holder.gameItem.setVisibility(View.GONE);
+            return;
+        } else {
+            holder.gameItem.setVisibility(View.VISIBLE);
+        }
+
         holder.courtText.setText(gameData.getCourt());
         holder.playtimeText.setText(gameData.getPlaytime());
         setImage(holder.player1Image, gameDatas.get(position).getPlayer1());
@@ -63,7 +73,11 @@ public class GameAdapter extends RecyclerView.Adapter<GameViewHolder> {
             holder.gameItem.setCardBackgroundColor(Color.GRAY);
             holder.gameItem.setOnClickListener(null);
         } else {
-            holder.gameItem.setCardBackgroundColor(Color.WHITE);
+            if(gameDatas.get(position).isJoined()) {
+                holder.gameItem.setCardBackgroundColor(Color.rgb(0x9f,0xbf,0xf2));
+            } else {
+                holder.gameItem.setCardBackgroundColor(Color.WHITE);
+            }
             holder.gameItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -77,7 +91,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameViewHolder> {
 
     private void setImage(final ImageView imageView, String userID) {
         if (userID==null || userID.length() == 0) {
-            imageView.setImageResource(R.mipmap.ic_launcher);
+            imageView.setImageResource(R.drawable.ic_blank);
             return;
         }
 
@@ -146,6 +160,8 @@ class GameData {
     private boolean winner; // true for player 1&2 wins, false for others
     private boolean isMatched; // true if the game has been matched
     private String score; // Empty if not finished, something if finished
+    private boolean visible;
+    private boolean joined;
 
     public GameData(String gameID, boolean type, String playtime, String player1, String player2, String player3, String player4, String court, boolean winner, boolean isMatched, String score) {
         this.gameID = gameID;
@@ -159,6 +175,24 @@ class GameData {
         this.winner = winner;
         this.isMatched = isMatched;
         this.score = score;
+        this.visible=true;
+        this.joined=false;
+    }
+
+    public boolean isJoined() {
+        return joined;
+    }
+
+    public void setJoined(boolean joined) {
+        this.joined = joined;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 
     @Override
