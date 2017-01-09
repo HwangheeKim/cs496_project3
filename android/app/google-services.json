@@ -1,38 +1,20 @@
 {
   "project_info": {
-<<<<<<< HEAD
-    "project_number": "911165686408",
-    "firebase_url": "https://cs496-proj3.firebaseio.com",
-    "project_id": "cs496-proj3",
-    "storage_bucket": "cs496-proj3.appspot.com"
-=======
     "project_number": "127894664599",
     "firebase_url": "https://tennistogether-4749d.firebaseio.com",
     "project_id": "tennistogether-4749d",
     "storage_bucket": "tennistogether-4749d.appspot.com"
->>>>>>> 5bb9f17de38194ca08f29a6ebe1408c3803b5bf5
   },
   "client": [
     {
       "client_info": {
-<<<<<<< HEAD
-        "mobilesdk_app_id": "1:911165686408:android:9e0caba1eca03bc7",
-=======
         "mobilesdk_app_id": "1:127894664599:android:9e0caba1eca03bc7",
->>>>>>> 5bb9f17de38194ca08f29a6ebe1408c3803b5bf5
         "android_client_info": {
           "package_name": "com.hwanghee.tennistogether"
         }
       },
       "oauth_client": [
         {
-<<<<<<< HEAD
-          "client_id": "911165686408-1a8sbpequu8h9gop7qav6erdu6sgscqh.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [],
-=======
           "client_id": "127894664599-8kpad3qoa1tu35spha7jboj94ngsmn43.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -42,7 +24,6 @@
           "current_key": "AIzaSyA8X8IFpCPTmHhQx7fXte2_WAGwmkUSNuc"
         }
       ],
->>>>>>> 5bb9f17de38194ca08f29a6ebe1408c3803b5bf5
       "services": {
         "analytics_service": {
           "status": 1
