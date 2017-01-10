@@ -3,6 +3,7 @@ package com.hwanghee.tennistogether;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -23,6 +24,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -34,6 +37,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import im.delight.android.location.SimpleLocation;
+
 public class GameRegisterFragment extends Fragment {
     View rootView;
     Calendar current = Calendar.getInstance();
@@ -43,6 +48,7 @@ public class GameRegisterFragment extends Fragment {
 
     String address = new String();
     RadioGroup radio;
+    private SimpleLocation location;
 
     public GameRegisterFragment() {
         // Required empty public constructor
@@ -69,6 +75,18 @@ public class GameRegisterFragment extends Fragment {
         View doneBtn = rootView.findViewById(R.id.gameregister_done);
         View cancelBtn = rootView.findViewById(R.id.gameregister_cancel);
         radio = (RadioGroup) rootView.findViewById(R.id.RadioGroup1);
+        location = new SimpleLocation(this.getContext());
+
+        if (!location.hasLocationEnabled()) {
+            // ask the user to enable location access
+            SimpleLocation.openSettings(this.getContext());
+        }
+
+        final double latitude = location.getLatitude();
+        final double longitude = location.getLongitude();
+        Toast.makeText(getContext(), Double.toString(latitude) , Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), Double.toString(longitude) , Toast.LENGTH_SHORT).show();
+
 
         rootView.findViewById(R.id.gameregister_date_change).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -111,7 +129,6 @@ public class GameRegisterFragment extends Fragment {
                 ((MainActivity)getActivity()).loadGameFinder();
             }
         });
-
         return rootView;
     }
 
