@@ -127,6 +127,43 @@ function notnull(str) {
     return "";
 }
 
+// GET request for user's record
+app.get('/user/record/:userID', function(req, res) {
+    console.log("[GET/user/record] Request on " + req.params.userID);
+    var win = 0;
+    var lose = 0;
+
+    var amiplayer12 = {$or : [{player1:req.params.userID}, {player2:req.params.userID}]};
+    var amiplayer34 = {$or : [{player3:req.params.userID}, {player4:req.params.userID}]};
+
+    var iam12andwin = {$and : [amiplayer12, {winner:true}]};
+    var iam34andwin = {$and : [amiplayer34, {winner:false}]};
+    var iam12andlose = {$and : [amiplayer12, {winner:false}]};
+    var iam34andlose = {$and : [amiplayer34, {winner:true}]};
+
+    var iwon = {$or : [iam12andwin, iam34andwin]};
+    var ilose = {$or : [iam12andlose, iam34andlose]};
+
+    var winquery = {$and : [{score : {$ne : ""}}, iwon]};
+    var losequery = {$and : [{score : {$ne : ""}}, ilose]};
+
+    console.log("[GET/user/record] Entering the query");
+    Game.find(winquery, function(err1, result1) {
+        if (err1) throw err1;
+
+        win = result1.length;
+        Game.find(losequery, function(err2, result2) {
+            if (err2) throw err2;
+
+            lose = result2.length;
+
+            res.writeHead(200, {'Content-Type' : 'application/json'});
+            res.write(JSON.stringify({win:win, lose:lose}));
+            res.end();
+        });
+    });
+});
+
 // POST request for user enrollment
 app.post('/user/enroll', function(req, res) {
     console.log("[User/enroll] Got request");
