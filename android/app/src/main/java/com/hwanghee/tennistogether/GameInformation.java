@@ -69,8 +69,10 @@ public class GameInformation extends AppCompatActivity {
         try {
             ((TextView)findViewById(R.id.gameinfo_court)).setText(
                     URLDecoder.decode(gamedata.get("court").getAsString(), "utf-8"));
-            ((TextView)findViewById(R.id.gameinfo_playtime)).setText(
-                    gamedata.get("playtime").getAsString());
+            ((TextView)findViewById(R.id.gameinfo_date)).setText(
+                    MyParser.getDate(gamedata.get("playtime").getAsString()));
+            ((TextView)findViewById(R.id.gameinfo_time)).setText(
+                    MyParser.getTime(gamedata.get("playtime").getAsString()));
         } catch (Exception e) {
             e.printStackTrace();
         }
