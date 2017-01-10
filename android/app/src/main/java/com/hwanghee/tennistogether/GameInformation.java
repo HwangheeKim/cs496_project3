@@ -1,21 +1,13 @@
 package com.hwanghee.tennistogether;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.view.ContextThemeWrapper;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +15,6 @@ import android.widget.Toast;
 import com.facebook.AccessToken;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.async.http.socketio.ExceptionCallback;
 import com.koushikdutta.ion.Ion;
 import com.squareup.picasso.Picasso;
 
@@ -142,7 +133,7 @@ public class GameInformation extends AppCompatActivity {
     public void updateScore(String result) {
         JsonObject json = new JsonObject();
         json.addProperty("score", result);
-        json.addProperty("winner", ScoreParser.winner(result));
+        json.addProperty("winner", MyParser.winner(result));
 
         Ion.with(getApplicationContext()).load(MainActivity.serverURL+"/game/update/"+gameID)
                 .setJsonObjectBody(json).asJsonObject()

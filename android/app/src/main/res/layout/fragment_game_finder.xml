@@ -33,6 +33,4 @@
         app:layout_anchorGravity="bottom|right|end"
         app:layout_behavior="com.hwanghee.tennistogether.ScrollAwareFABBehavior"/>
 
-    <!-- TODO : behavior! -->
-
 </android.support.design.widget.CoordinatorLayout>

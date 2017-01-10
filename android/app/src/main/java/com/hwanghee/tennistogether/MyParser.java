@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Created by q on 2017-01-09.
  */
 
-public class ScoreParser {
+public class MyParser {
     public static String stringify(ArrayList<Integer> scores) {
         return TextUtils.join("#", scores);
     }
@@ -34,5 +34,14 @@ public class ScoreParser {
 
         if(balance > 0) return true ;
         return false;
+    }
+
+    public static String getDate(String playtime) {
+        // TODO : Implement this method
+        return "";
+    }
+
+    public static String getTime(String playtime) {
+        return "";
     }
 }

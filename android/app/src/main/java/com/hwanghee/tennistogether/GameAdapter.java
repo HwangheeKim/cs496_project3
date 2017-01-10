@@ -76,11 +76,10 @@ public class GameAdapter extends BaseAdapter {
 
         ((TextView)convertView.findViewById(R.id.game_court)).setText(gameDatas.get(position).getCourt());
 
-        // TODO : Format 9월 27일
         ((TextView)convertView.findViewById(R.id.game_date)).setText(gameDatas.get(position).getPlaytime());
-
-        // 17:00
-//        ((TextView)convertView.findViewById(R.id.game_time)).setText(gameDatas.get(position).getPlaytime());
+        // TODO : Format : 9월 27일 : 17:00
+//        ((TextView)convertView.findViewById(R.id.game_date)).setText(MyParser.getDate(gameDatas.get(position).getPlaytime()));
+//        ((TextView)convertView.findViewById(R.id.game_time)).setText(MyParser.getTime(gameDatas.get(position).getPlaytime()));
 
         if(gameDatas.get(position).getType()) { // If the game is single
             convertView.findViewById(R.id.game_p3).setVisibility(View.GONE);

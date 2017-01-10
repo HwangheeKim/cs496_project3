@@ -25,7 +25,7 @@ import java.net.URLDecoder;
 import static android.app.Activity.RESULT_OK;
 
 public class GameFinder extends Fragment {
-    public static GameAdapter mAdapter;
+    public GameAdapter mAdapter;
     public static int GAME_FILTERING = 0x0201;
     private OnFragmentInteractionListener mListener;
     private SwipeRefreshLayout mSwipeRefreshLayout;

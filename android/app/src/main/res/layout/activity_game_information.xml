@@ -1,279 +1,329 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/activity_game_information"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
         android:orientation="vertical"
         tools:context="com.hwanghee.tennistogether.GameInformation">
 
-
-        <FrameLayout
-            android:id="@+id/gameinfo_player1"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:background="#bbaa2222"
-            android:layout_margin="@dimen/gamefinder_profile_margin">
+            android:layout_height="150dp"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/gameinfo_info1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/gameinfo_img1"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_margin="@dimen/gamefinder_profile_margin"
-                    android:scaleType="centerCrop"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:id="@+id/gameinfo_name1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#ffffff"
-                        android:textStyle="bold"
-                        android:textSize="24dp"/>
-
-                    <TextView
-                        android:id="@+id/gameinfo_group1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#ffffff"
-                        android:textStyle="bold"/>
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <TextView
-                android:visibility="invisible"
-                android:id="@+id/gameinfo_empty1"
+            <FrameLayout
+                android:id="@+id/gameinfo_player1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:textColor="#ffffff"
-                android:textSize="10dp"
-                android:text="TAP HERE TO JOIN THE GAME"/>
+                android:layout_weight="1"
+                android:clickable="true"
+                android:background="#bb1f8f46">
 
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/gameinfo_player2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/gamefinder_profile_margin"
-            android:background="#bbaa2222"
-            android:clickable="true">
-
-            <LinearLayout
-                android:id="@+id/gameinfo_info2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/gameinfo_img2"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_margin="@dimen/gamefinder_profile_margin"
-                    android:scaleType="centerCrop"/>
-
-                <LinearLayout
+                <FrameLayout
+                    android:id="@+id/gameinfo_info1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center_vertical">
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/gameinfo_name2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#ffffff"
-                        android:textStyle="bold"
-                        android:textSize="24dp"/>
+                    <ImageView
+                        android:id="@+id/gameinfo_img1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@mipmap/ic_launcher"
+                        android:scaleType="centerCrop"/>
 
-                    <TextView
-                        android:id="@+id/gameinfo_group2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#ffffff"
-                        android:textStyle="bold"/>
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#9000"></FrameLayout>
 
-                </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:gravity="right|bottom">
 
-            </LinearLayout>
+                        <TextView
+                            android:id="@+id/gameinfo_name1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="#ffffff"
+                            android:textStyle="bold"
+                            android:text="Hwanghee Kim"
+                            android:gravity="right"
+                            android:textSize="24dp"/>
 
-            <TextView
-                android:visibility="invisible"
-                android:id="@+id/gameinfo_empty2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:textColor="#ffffff"
-                android:textSize="10dp"
-                android:text="TAP HERE TO JOIN THE GAME"/>
+                        <TextView
+                            android:id="@+id/gameinfo_group1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="#ffffff"
+                            android:text="KAISST STROKE "
+                            android:gravity="right"
+                            android:textStyle="bold"/>
 
-        </FrameLayout>
+                    </LinearLayout>
+                </FrameLayout>
 
-        <FrameLayout
-            android:id="@+id/gameinfo_player3"
-            android:layout_margin="@dimen/gamefinder_profile_margin"
-            android:clickable="true"
-            android:background="#bb0033bb"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:id="@+id/gameinfo_info3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="right">
-
-                <LinearLayout
+                <TextView
+                    android:visibility="invisible"
+                    android:id="@+id/gameinfo_empty1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center_vertical|right">
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:textSize="10dp"
+                    android:text="TAP HERE TO JOIN THE GAME"/>
 
-                    <TextView
-                        android:id="@+id/gameinfo_name3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#ffffff"
-                        android:textStyle="bold"
-                        android:textSize="24dp"/>
+            </FrameLayout>
 
-                    <TextView
-                        android:id="@+id/gameinfo_group3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#ffffff"
-                        android:textStyle="bold"/>
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/gameinfo_img3"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_margin="@dimen/gamefinder_profile_margin"
-                    android:scaleType="centerCrop"/>
-
-            </LinearLayout>
-
-            <TextView
-                android:visibility="invisible"
-                android:id="@+id/gameinfo_empty3"
+            <FrameLayout
+                android:id="@+id/gameinfo_player2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:textColor="#ffffff"
-                android:textSize="10dp"
-                android:text="TAP HERE TO JOIN THE GAME"/>
-        </FrameLayout>
+                android:layout_weight="1"
+                android:clickable="true"
+                android:background="#bb1f8f46">
 
-        <FrameLayout
-            android:id="@+id/gameinfo_player4"
-            android:layout_margin="@dimen/gamefinder_profile_margin"
-            android:clickable="true"
-            android:background="#bb0033bb"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:id="@+id/gameinfo_info4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="right">
-
-                <LinearLayout
+                <FrameLayout
+                    android:id="@+id/gameinfo_info2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center_vertical|right">
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/gameinfo_name4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#ffffff"
-                        android:textStyle="bold"
-                        android:textSize="24dp"/>
+                    <ImageView
+                        android:id="@+id/gameinfo_img2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@mipmap/ic_launcher"
+                        android:scaleType="centerCrop"/>
 
-                    <TextView
-                        android:id="@+id/gameinfo_group4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#ffffff"
-                        android:textStyle="bold"/>
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#9000"></FrameLayout>
 
-                </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:gravity="right|bottom">
 
-                <ImageView
-                    android:id="@+id/gameinfo_img4"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_margin="@dimen/gamefinder_profile_margin"
-                    android:scaleType="centerCrop"/>
+                        <TextView
+                            android:id="@+id/gameinfo_name2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="#ffffff"
+                            android:textStyle="bold"
+                            android:text="Hwanghee Kim"
+                            android:gravity="left"
+                            android:textSize="24dp"/>
 
-            </LinearLayout>
+                        <TextView
+                            android:id="@+id/gameinfo_group2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="#ffffff"
+                            android:text="KAISST STROKE "
+                            android:gravity="left"
+                            android:textStyle="bold"/>
+
+                    </LinearLayout>
+                </FrameLayout>
+
+                <TextView
+                    android:visibility="invisible"
+                    android:id="@+id/gameinfo_empty2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:textSize="10dp"
+                    android:text="TAP HERE TO JOIN THE GAME"/>
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <TextView
-                android:visibility="invisible"
-                android:id="@+id/gameinfo_empty4"
+                android:id="@+id/gameinfo_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="3월 14일"/>
+            <TextView
+                android:id="@+id/gameinfo_playtime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text = "17:00"/>
+
+            <TextView
+                android:id="@+id/gameinfo_court"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="목동 테니스코트"/>
+
+            <Button
+                android:id="@+id/gameinfo_finish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Result"/>
+            <Button
+                android:id="@+id/gameinfo_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cancel"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:id="@+id/gameinfo_player4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:textColor="#ffffff"
-                android:textSize="10dp"
-                android:text="TAP HERE TO JOIN THE GAME"/>
-        </FrameLayout>
+                android:layout_weight="1"
+                android:clickable="true"
+                android:background="#bb2491a6">
 
-        <TextView
-            android:id="@+id/gameinfo_playtime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text = "2017/1/1 17:00"/>
+                <FrameLayout
+                    android:id="@+id/gameinfo_info4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/gameinfo_court"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="목동테니스장"/>
+                    <ImageView
+                        android:id="@+id/gameinfo_img4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@mipmap/ic_launcher"
+                        android:scaleType="centerCrop"/>
 
-        <Button
-            android:id="@+id/gameinfo_finish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Result"/>
-        <Button
-            android:id="@+id/gameinfo_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cancel"/>
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#9000"></FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:gravity="right|top">
+
+                        <TextView
+                            android:id="@+id/gameinfo_name4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="#ffffff"
+                            android:textStyle="bold"
+                            android:text="Hwanghee Kim"
+                            android:gravity="right"
+                            android:textSize="24dp"/>
+
+                        <TextView
+                            android:id="@+id/gameinfo_group4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="#ffffff"
+                            android:text="KAISST STROKE "
+                            android:gravity="right"
+                            android:textStyle="bold"/>
+
+                    </LinearLayout>
+                </FrameLayout>
+
+                <TextView
+                    android:visibility="invisible"
+                    android:id="@+id/gameinfo_empty4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:textSize="10dp"
+                    android:text="TAP HERE TO JOIN THE GAME"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/gameinfo_player3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:background="#bb2491a6">
+
+                <FrameLayout
+                    android:id="@+id/gameinfo_info3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/gameinfo_img3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@mipmap/ic_launcher"
+                        android:scaleType="centerCrop"/>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#9000"></FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:gravity="right|top">
+
+                        <TextView
+                            android:id="@+id/gameinfo_name3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="#ffffff"
+                            android:textStyle="bold"
+                            android:text="Hwanghee Kim"
+                            android:gravity="left"
+                            android:textSize="24dp"/>
+
+                        <TextView
+                            android:id="@+id/gameinfo_group3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="#ffffff"
+                            android:text="KAISST STROKE "
+                            android:gravity="left"
+                            android:textStyle="bold"/>
+
+                    </LinearLayout>
+                </FrameLayout>
+
+                <TextView
+                    android:visibility="invisible"
+                    android:id="@+id/gameinfo_empty3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:textSize="10dp"
+                    android:text="TAP HERE TO JOIN THE GAME"/>
+
+            </FrameLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
-
-</ScrollView>
 

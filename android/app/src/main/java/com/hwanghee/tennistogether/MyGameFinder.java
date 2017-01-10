@@ -21,7 +21,7 @@ import java.net.URLDecoder;
 
 public class MyGameFinder extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    public static GameAdapter mAdapter = GameFinder.mAdapter;
+    public GameAdapter mAdapter = new GameAdapter();
     private OnFragmentInteractionListener mListener;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
