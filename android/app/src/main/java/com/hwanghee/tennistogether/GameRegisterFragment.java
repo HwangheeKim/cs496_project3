@@ -48,6 +48,8 @@ public class GameRegisterFragment extends Fragment {
     TextView dateView;
     TextView timeView;
     String coordinate;
+    double latitude;
+    double longitude;
 
     String address = new String();
     RadioGroup radio;
@@ -86,11 +88,11 @@ public class GameRegisterFragment extends Fragment {
             SimpleLocation.openSettings(this.getContext());
         }
 
-        final double latitude = location.getLatitude();
-        final double longitude = location.getLongitude();
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
 
-        coordinate = latitude + "," +longitude;
-        Toast.makeText(getContext(), coordinate , Toast.LENGTH_SHORT).show();
+//        coordinate = latitude + "," +longitude;
+//        Toast.makeText(getContext(), coordinate , Toast.LENGTH_SHORT).show();
 
 
         rootView.findViewById(R.id.gameregister_date_change).setOnClickListener(new View.OnClickListener() {
@@ -143,7 +145,8 @@ public class GameRegisterFragment extends Fragment {
             json.addProperty("type", radio.getCheckedRadioButtonId() == R.id.radioButtonGR1);
             json.addProperty("court", URLEncoder.encode(address, "utf-8"));
             json.addProperty("player1", MainActivity.userID);
-            json.addProperty("gps", coordinate);
+            json.addProperty("latitute", latitude);
+            json.addProperty("longitute", longitude);
             SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSZ", Locale.getDefault());
             Date ndate;
             ndate = new Date(year-1900, month, day-30, hour, minute);
