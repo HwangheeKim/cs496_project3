@@ -103,7 +103,7 @@ public class GameInformation extends AppCompatActivity {
                             .asJsonObject().setCallback(new FutureCallback<JsonObject>() {
                         @Override
                         public void onCompleted(Exception e, JsonObject result) {
-                            Toast.makeText(getApplicationContext(), "You cancel the game", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "You left the game", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent();
                             setResult(RESULT_OK, intent);
                             finish();
@@ -218,7 +218,7 @@ public class GameInformation extends AppCompatActivity {
                                         json.addProperty(jsonname[playernumber], MainActivity.userID);
 
                                         Ion.with(getApplicationContext())
-                                                .load(MainActivity.serverURL+"/game/notifyjoin/"+gameID+"/"+MainActivity.userID)
+                                                .load(MainActivity.serverURL+"/game/notify/join/"+gameID+"/"+MainActivity.userID)
                                                 .asJsonObject().setCallback(new FutureCallback<JsonObject>() {
                                             @Override
                                             public void onCompleted(Exception e, JsonObject result) {

@@ -50,6 +50,7 @@ public class GameRegisterFragment extends Fragment {
     String coordinate;
     double latitude;
     double longitude;
+    String finedMinute;
 
     String address = new String();
     RadioGroup radio;
@@ -72,9 +73,11 @@ public class GameRegisterFragment extends Fragment {
         day = current.get(Calendar.DAY_OF_MONTH);
         hour = current.get(Calendar.HOUR_OF_DAY);
         minute = current.get(Calendar.MINUTE);
+        finedMinute = String.format("%02d", minute);
+        Toast.makeText(getContext(), finedMinute, Toast.LENGTH_SHORT);
 
         dateView.setText("" + year + ". " + month + ". " + day + ".");
-        timeView.setText("" + hour + " : " + minute);
+        timeView.setText("" + hour + " : " + finedMinute);
 
         final EditText editText = (EditText) rootView.findViewById(R.id.editText);
         View doneBtn = rootView.findViewById(R.id.gameregister_done);
@@ -184,8 +187,9 @@ public class GameRegisterFragment extends Fragment {
         Log.d("setHour", "#" + hr + "#" + mn);
         this.hour = hr;
         this.minute = mn;
+        finedMinute = String.format("%02d", minute);
 
-        timeView.setText("" + hour + " : " + minute);
+        timeView.setText("" + hour + " : " + finedMinute);
     }
 
     public static class MyDialogFragment extends DialogFragment {
