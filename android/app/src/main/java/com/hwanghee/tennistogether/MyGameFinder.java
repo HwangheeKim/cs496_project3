@@ -19,15 +19,6 @@ import com.koushikdutta.ion.Ion;
 
 import java.net.URLDecoder;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MyGameFinder.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MyGameFinder#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MyGameFinder extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     public static GameAdapter mAdapter = GameFinder.mAdapter;
@@ -46,21 +37,21 @@ public class MyGameFinder extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_game_finder, container, false);
 
-        mRecyclerView = (RecyclerView)view.findViewById(R.id.gamefinder_list);
-        mLayoutManager = new LinearLayoutManager(view.getContext());
-        mAdapter = new GameAdapter();
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mAdapter);
-
-        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.gamefinder_swiperefresh);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                loadGameData(view);
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
-        });
-        loadGameData(view);
+//        mRecyclerView = (RecyclerView)view.findViewById(R.id.gamefinder_list);
+//        mLayoutManager = new LinearLayoutManager(view.getContext());
+//        mAdapter = new GameAdapter();
+//        mRecyclerView.setLayoutManager(mLayoutManager);
+//        mRecyclerView.setAdapter(mAdapter);
+//
+//        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.gamefinder_swiperefresh);
+//        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                loadGameData(view);
+//                mSwipeRefreshLayout.setRefreshing(false);
+//            }
+//        });
+//        loadGameData(view);
         return view;
     }
 
@@ -90,9 +81,9 @@ public class MyGameFinder extends Fragment {
                                     record.get("player4").getAsString());
 
                             if(alreadyInGame(record)) {
-                                mAdapter.get(i).setVisible(true);
+                                mAdapter.getItem(i).setVisible(true);
                             }
-                            else mAdapter.get(i).setVisible(false);
+                            else mAdapter.getItem(i).setVisible(false);
                         }
                     }
                 });

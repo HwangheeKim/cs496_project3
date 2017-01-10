@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -43,10 +44,9 @@ public class MainActivity extends AppCompatActivity
     static String userEmail = "something@some.thing";
     static String serverURL = "http://52.78.101.202:3000";
     static String userToken = "";
-    private DrawerLayout drawerLayout;
-    private NavigationView navView;
 
     private GameFinder gameFinder;
+    private GameRegisterFragment gameRegister;
     private MyGameFinder myGameFinder;
 
     @Override
@@ -55,12 +55,12 @@ public class MainActivity extends AppCompatActivity
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
 
-        drawerLayout = (DrawerLayout)findViewById(R.id.main_drawer);
-        navView = (NavigationView)findViewById(R.id.main_nav_list);
-        Fragment newFragment = new GameFinder();
+        gameFinder = new GameFinder();
+        gameRegister = new GameRegisterFragment();
+        myGameFinder = new MyGameFinder();
 
         // Initial Screen
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, newFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, gameFinder).commit();
 
         FacebookSdk.sdkInitialize(getApplicationContext(), new FacebookSdk.InitializeCallback() {
             @Override
@@ -71,33 +71,51 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        gameFinder = new GameFinder();
-        myGameFinder = new MyGameFinder();
-
-        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        findViewById(R.id.drawer_gamefinder).setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                item.setChecked(true);
-                if(item.getItemId() == R.id.drawer_gamefinder) {
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.main_container, gameFinder).commit();
-                } else if(item.getItemId() == R.id.drawer_courtfinder) {
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.main_container, myGameFinder).commit();
-                } else if(item.getItemId() == R.id.drawer_login) {
-                    if(isLoggedIn()) {
-                        Snackbar.make(navView, "Already Logged in!", Snackbar.LENGTH_SHORT).show();
-                    } else {
-                        Intent intent = new Intent(MainActivity.this, Login.class);
-                        startActivityForResult(intent, REQUEST_LOGIN);
-                    }
-                } else if(item.getItemId() == R.id.drawer_me) {
-                    Fragment newFragment = new MyInfo();
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.main_container, newFragment).commit();
+            public void onClick(View v) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.main_container, gameFinder).commit();
+                ((DrawerLayout)findViewById(R.id.main_drawer)).closeDrawer(Gravity.LEFT);
+            }
+        });
+
+        findViewById(R.id.drawer_addgame).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.main_container, gameRegister).commit();
+                ((DrawerLayout)findViewById(R.id.main_drawer)).closeDrawer(Gravity.LEFT);
+            }
+        });
+
+        findViewById(R.id.drawer_mygames).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.main_container, myGameFinder).commit();
+                ((DrawerLayout)findViewById(R.id.main_drawer)).closeDrawer(Gravity.LEFT);
+            }
+        });
+
+        findViewById(R.id.drawer_me).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ((DrawerLayout)findViewById(R.id.main_drawer)).closeDrawer(Gravity.LEFT);
+            }
+        });
+
+        findViewById(R.id.drawer_login).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isLoggedIn()) {
+                    Snackbar.make(findViewById(R.id.main_container), "Already Logged In!", Snackbar.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(MainActivity.this, Login.class);
+                    startActivityForResult(intent, REQUEST_LOGIN);
                 }
-                drawerLayout.closeDrawers();
-                return true;
+                ((DrawerLayout)findViewById(R.id.main_drawer)).closeDrawer(Gravity.LEFT);
             }
         });
     }
@@ -137,7 +155,7 @@ public class MainActivity extends AppCompatActivity
                         }
 
                         if(!isFirsttime) {
-                            Snackbar.make(navView, "Welcome Back, " + userName + "!", Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(findViewById(R.id.main_container), "Welcome Back, " + userName + "!", Snackbar.LENGTH_SHORT).show();
                         }
                         enrollMe();
                     }
@@ -167,16 +185,12 @@ public class MainActivity extends AppCompatActivity
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
-                        View header = navView.getHeaderView(0);
-                        ImageView drawerAvatar = (ImageView)header.findViewById(R.id.drawer_avatar);
+                        ImageView drawerAvatar = (ImageView)findViewById(R.id.drawer_avatar);
                         String imgurl = "https://graph.facebook.com/" + userID + "/picture?height=500";
-                        Picasso.with(header.getContext()).load(imgurl).into(drawerAvatar);
+                        Picasso.with(getApplicationContext()).load(imgurl).into(drawerAvatar);
 
-                        TextView drawerUserName = (TextView)header.findViewById(R.id.drawer_username);
+                        TextView drawerUserName = (TextView)findViewById(R.id.drawer_username);
                         drawerUserName.setText(userName);
-
-                        TextView drawerEmail = (TextView)header.findViewById(R.id.drawer_email);
-                        drawerEmail.setText(userEmail);
                     }
                 });
     }

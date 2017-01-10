@@ -10,47 +10,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
+        <GridView
             android:id="@+id/gamefinder_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </android.support.v7.widget.RecyclerView>
+            android:layout_height="match_parent"
+            android:horizontalSpacing="0dp"
+            android:verticalSpacing="0dp"
+            android:numColumns="2"
+            app:layout_scrollFlags="scroll|enterAlways">
+        </GridView>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-
-    <com.github.clans.fab.FloatingActionMenu
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/gamefinder_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
-        android:layout_margin="14dp"
-        app:menu_buttonToggleAnimation="@anim/fab_scale_up"
-        app:menu_colorNormal="@color/colorPrimary"
-        app:menu_colorPressed="@color/colorPrimary"
-        app:menu_colorRipple="@color/colorPrimary"
-        app:menu_labels_singleLine="true"
-        app:menu_buttonSpacing="5dp"
-        app:menu_animationDelayPerItem="50">
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_search"
+        app:layout_anchor="@id/gamefinder_list"
+        app:layout_anchorGravity="bottom|right|end"
+        app:layout_behavior="com.hwanghee.tennistogether.ScrollAwareFABBehavior"/>
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/gamefinder_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_search"
-            app:fab_colorNormal="#aaaaaa"
-            app:fab_colorPressed="#aaaaaa"
-            app:fab_size="mini"/>
-
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/gamefinder_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_add"
-            app:fab_colorNormal="#aaaaaa"
-            app:fab_colorPressed="#aaaaaa"
-            app:fab_size="mini"/>
-
-    </com.github.clans.fab.FloatingActionMenu>
-
+    <!-- TODO : behavior! -->
 
 </android.support.design.widget.CoordinatorLayout>
