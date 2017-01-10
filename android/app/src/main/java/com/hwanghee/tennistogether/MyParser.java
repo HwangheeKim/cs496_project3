@@ -39,11 +39,33 @@ public class MyParser {
     public static String getDate(String playtime) {
         // TODO : Implement this method
         // 2017-01-10T15:00:00.000Z
-        char[] charDate = new char [10];
-        playtime.getChars(0, 10, charDate, 0);
-        String strDate = "";
-        strDate = new String(charDate, 0, charDate.length);
+        String strMonth;
+        char[] charMonth = new char [2];
+        playtime.getChars(5, 7, charMonth, 0);
 
+        if(charMonth[0] == '0'){
+            char finedCharMonth = charMonth[1];
+            strMonth = Character.toString(finedCharMonth);
+        }
+        else{
+            strMonth = new String(charMonth, 0, charMonth.length);
+        }
+
+        String strDay;
+        char[] charDay = new char [2];
+        playtime.getChars(8, 10, charDay, 0);
+
+        if(charDay[0] == '0'){
+            char finedCharDay = charDay[1];
+            strDay = Character.toString(finedCharDay);
+        }
+        else{
+            strDay = new String(charDay, 0, charDay.length);
+        }
+
+
+
+        String strDate = strMonth + "월 " + strDay + "일";
         return strDate;
     }
 
