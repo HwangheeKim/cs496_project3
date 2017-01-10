@@ -1,6 +1,11 @@
 package com.hwanghee.tennistogether;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
@@ -18,6 +23,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -28,6 +34,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import static android.app.Activity.RESULT_OK;
 
 
 //TextView GRtv1 = (TextView) findViewById(R.id.textViewYY);
@@ -41,8 +49,11 @@ public class GameRegister extends AppCompatActivity {
     TextView GRtv1;
     TextView GRtv2;
     TextView GRtv3;
-
-
+    Double lat,lon;
+    String latST;
+    String lonST;
+    Location location;
+    LocationManager locationManager;
     String address = new String();
     RadioGroup radio;
 
@@ -111,6 +122,23 @@ public class GameRegister extends AppCompatActivity {
             }
         });
 
+
+        if (Build.VERSION.SDK_INT >= 23 && getApplicationContext().checkSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 0);
+
+            //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
+        } else {
+
+            // Android version is lesser than 6.0 or the permission is already granted.
+        }
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        String bestProvider = locationManager.getBestProvider(criteria, false);
+        location = locationManager.getLastKnownLocation(bestProvider);
+        Toast.makeText(getApplicationContext(), "HIHIHIHI" , Toast.LENGTH_SHORT).show();
+        getLocation();
+
+
         addressBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String inPutText = editText.getText().toString();
@@ -122,6 +150,19 @@ public class GameRegister extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
+        if (requestCode == 0) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission is granted
+                getLocation();
+            } else {
+                Toast.makeText(this.getApplicationContext(), "Until you grant the permission, we cannot display the names", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     public void setVariables() {
@@ -176,6 +217,31 @@ public class GameRegister extends AppCompatActivity {
 
         GRtv4.setText(Integer.toString(hour));
         GRtv5.setText(Integer.toString(minute));
+    }
+
+    public void checkPermission(){
+//        Toast.makeText(getApplicationContext(), Integer.toString(PackageManager.PERMISSION_GRANTED) , Toast.LENGTH_SHORT).show();
+
+    }
+
+
+
+    public LatLng getLocation(){
+
+
+        try {
+            lat = location.getLatitude();
+            lon = location.getLongitude();
+            latST = Double.toString(lat);
+            lonST = Double.toString(lon);
+
+            Toast.makeText(getApplicationContext(), latST , Toast.LENGTH_SHORT).show();
+            return new LatLng(lat, lon);
+        }
+        catch (NullPointerException e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public static class MyDialogFragment extends DialogFragment {
