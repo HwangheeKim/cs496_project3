@@ -89,6 +89,19 @@ app.get('/game/ongoing', function(req, res) {
     });
 });
 
+// GET request for game with that user joined
+app.get('/game/joined/:userID', function(req, res) {
+    var uid = req.params.userID;
+    var query = {$and: [{score:""}, {$or:[{player1:uid}, {player2:uid}, {player3:uid}, {player4:uid}]}]};
+    Game.find(query, function(err, results) {
+        if (err) throw err;
+        
+        res.writeHead(200, {'Content-Type':'application/json'});
+        res.write(JSON.stringify(results));
+        res.end();
+    });
+});
+
 // Get request for game information
 app.get('/game/:gameID', function(req, res) {
     Game.findById(req.params.gameID, function(err, result){
@@ -266,30 +279,37 @@ app.post('/game/update/:gameID', function(req, res) {
 });
 
 // GET request for push notification
-app.get('/game/notifyjoin/:gameID/:userID', function(req, res) {
-    console.log("[Game/notify] Get noti request :) on " + req.params.gameID + " # " + req.params.userID);
+app.get('/game/notify/:action/:gameID/:userID', function(req, res) {
+    console.log("[game/notify/"+ req.params.action + "] Get noti request :) on " + req.params.gameID + " # " + req.params.userID);
     Game.findOne({_id:req.params.gameID}, function(err, result1) {
         if (err) throw err;
 
-        var target = [];
-        if(result1['player1']!="" && result1['player1']!=req.params.userID) notifyJoin(result1['player1']);
-        if(result1['player2']!="" && result1['player2']!=req.params.userID) notifyJoin(result1['player2']);
-        if(result1['player3']!="" && result1['player3']!=req.params.userID) notifyJoin(result1['player3']);
-        if(result1['player4']!="" && result1['player4']!=req.params.userID) notifyJoin(result1['player4']);
+        var isJoin = (req.params.action == "join");
+
+        if(result1['player1']!="" && result1['player1']!=req.params.userID) notify(result1['player1'], isJoin);
+        if(result1['player2']!="" && result1['player2']!=req.params.userID) notify(result1['player2'], isJoin);
+        if(result1['player3']!="" && result1['player3']!=req.params.userID) notify(result1['player3'], isJoin);
+        if(result1['player4']!="" && result1['player4']!=req.params.userID) notify(result1['player4'], isJoin);
     });
 });
 
 
-function notifyJoin(userID) {
+function notify(userID, isJoin) {
     User.findOne({userID:userID}, function(err, result) {
         if (err) throw err;
-        
+        var msgbody = "";
+        if (isJoin) {
+            msgbody = "New player joined your game!"
+        } else {
+            msgbody = "Player left the game!"
+        }
+
         var message = {
             to: result['userToken'],
             priority: "high",
             notification: {
                 title: "Tennis Together",
-                body: "New player joined your game!"
+                body: msgbody
             }
         };
 
