@@ -1,14 +1,7 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
-        android:text="원하시는 날짜를 선택해주세요!"
-        android:layout_width="match_parent"
-        android:layout_height="78dp"
-
-         />
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <DatePicker
         android:layout_width="wrap_content"
@@ -18,11 +11,11 @@
          />
 
     <Button
-        android:text="선택!"
+        android:text="Done"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/datebutton"
         android:layout_gravity="bottom"
         />
 
-</FrameLayout>
+</LinearLayout>

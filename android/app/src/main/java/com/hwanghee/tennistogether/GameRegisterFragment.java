@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -37,11 +38,8 @@ public class GameRegisterFragment extends Fragment {
     View rootView;
     Calendar current = Calendar.getInstance();
     int year, month, day, hour, minute;
-    TextView GRtv1;
-    TextView GRtv2;
-    TextView GRtv3;
-    TextView GRtv4;
-    TextView GRtv5;
+    TextView dateView;
+    TextView timeView;
 
     String address = new String();
     RadioGroup radio;
@@ -56,28 +54,23 @@ public class GameRegisterFragment extends Fragment {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_game_register, container, false);
 
-        GRtv1 = (TextView) rootView.findViewById(R.id.textViewYY);
-        GRtv2 = (TextView) rootView.findViewById(R.id.textViewMM);
-        GRtv3 = (TextView) rootView.findViewById(R.id.textViewDD);
-        GRtv4 = (TextView) rootView.findViewById(R.id.textViewHH);
-        GRtv5 = (TextView) rootView.findViewById(R.id.textViewMM2);
+        dateView = (TextView)rootView.findViewById(R.id.gameregister_date);
+        timeView = (TextView)rootView.findViewById(R.id.gameregister_time);
         year = current.get(Calendar.YEAR);
-        month = current.get(Calendar.MONTH);
+        month = current.get(Calendar.MONTH)+1;
         day = current.get(Calendar.DAY_OF_MONTH);
         hour = current.get(Calendar.HOUR_OF_DAY);
         minute = current.get(Calendar.MINUTE);
-        GRtv1.setText(Integer.toString(year));
-        GRtv2.setText(Integer.toString(month + 1));
-        GRtv3.setText(Integer.toString(day));
-        GRtv4.setText(Integer.toString(hour));
-        GRtv5.setText(Integer.toString(minute));
+
+        dateView.setText("" + year + ". " + month + ". " + day + ".");
+        timeView.setText("" + hour + " : " + minute);
 
         final EditText editText = (EditText) rootView.findViewById(R.id.editText);
-        Button addressBtn = (Button) rootView.findViewById(R.id.addressbtn);
+        View doneBtn = rootView.findViewById(R.id.gameregister_done);
+        View cancelBtn = rootView.findViewById(R.id.gameregister_cancel);
         radio = (RadioGroup) rootView.findViewById(R.id.RadioGroup1);
 
-        RelativeLayout date = (RelativeLayout) rootView.findViewById(R.id.RL1);
-        date.setOnClickListener(new View.OnClickListener() {
+        rootView.findViewById(R.id.gameregister_date_change).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // When button is clicked, call up to owning activity.
                 FragmentManager fm = getFragmentManager();
@@ -87,8 +80,7 @@ public class GameRegisterFragment extends Fragment {
             }
         });
 
-        RelativeLayout time = (RelativeLayout) rootView.findViewById(R.id.RL2);
-        time.setOnClickListener(new View.OnClickListener() {
+        rootView.findViewById(R.id.gameregister_time_change).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // When button is clicked, call up to owning activity.
                 FragmentManager fm2 = getFragmentManager();
@@ -104,11 +96,19 @@ public class GameRegisterFragment extends Fragment {
             }
         });
 
-        addressBtn.setOnClickListener(new View.OnClickListener() {
+        doneBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String inPutText = editText.getText().toString();
                 address = inPutText;
                 setVariables();
+                ((MainActivity)getActivity()).loadGameFinder();
+            }
+        });
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).loadGameFinder();
             }
         });
 
@@ -124,7 +124,7 @@ public class GameRegisterFragment extends Fragment {
 
             SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSZ", Locale.getDefault());
             Date ndate;
-            ndate = new Date(year-1900, month+1, day-30, hour, minute);
+            ndate = new Date(year-1900, month, day-30, hour, minute);
             dateformat.setTimeZone(TimeZone.getTimeZone("UTC"));
             dateformat.format(ndate);
 
@@ -138,8 +138,6 @@ public class GameRegisterFragment extends Fragment {
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
-                        Snackbar.make(rootView, "Game has been registered!", Snackbar.LENGTH_SHORT).show();
-                        // TODO : After add, what screen ?
                     }
                 });
     }
@@ -147,13 +145,10 @@ public class GameRegisterFragment extends Fragment {
     public void setDate(int yr, int monthOfYear, int dayOfMonth) {
         Log.d("setDate", "#" + yr + "#" + monthOfYear + "#" + dayOfMonth);
         this.year = yr;
-        this.month = monthOfYear;
+        this.month = monthOfYear+1;
         this.day = dayOfMonth;
 
-
-        GRtv1.setText(Integer.toString(this.year));
-        GRtv2.setText(Integer.toString(this.month+1));
-        GRtv3.setText(Integer.toString(this.day));
+        dateView.setText("" + year + ". " + month + ". " + day + ".");
     }
 
     public void setTime(int hr, int mn) {
@@ -161,11 +156,7 @@ public class GameRegisterFragment extends Fragment {
         this.hour = hr;
         this.minute = mn;
 
-        TextView GRtv4 = (TextView) rootView.findViewById(R.id.textViewHH);
-        TextView GRtv5 = (TextView) rootView.findViewById(R.id.textViewMM2);
-
-        GRtv4.setText(Integer.toString(hour));
-        GRtv5.setText(Integer.toString(minute));
+        timeView.setText("" + hour + " : " + minute);
     }
 
     public static class MyDialogFragment extends DialogFragment {

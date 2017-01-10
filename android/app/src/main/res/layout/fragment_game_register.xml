@@ -1,216 +1,312 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:id="@+id/activity_game_register"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context="com.hwanghee.tennistogether.GameRegister"
-android:weightSum="1"
-android:orientation="vertical">
-
-
-<TextView
-    android:text="경기 설정"
-    android:textSize="30dp"
-    android:textColor="@color/com_facebook_blue"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/textViewGR1"
-    android:layout_marginTop="10dp"
-    android:layout_marginLeft="10dp"
-    />
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#ff30395c">
 
-<TextView
-    android:text="경기 방식"
-    android:textSize="20dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginBottom="10dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/textViewGR2"
-    />
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textColor="#fff"
+        android:textSize="23dp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif"
+        android:text="Add New Game" />
 
-<RadioGroup
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:id="@+id/RadioGroup1"
-    android:checkedButton="@+id/radioButtonGR1">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp">
 
-    <RadioButton
-        android:text="단식"
+        <View android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#fff" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:textSize="16dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:text="Game Type"/>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="2"
+                android:orientation="horizontal"
+                android:id="@+id/RadioGroup1"
+                android:checkedButton="@+id/radioButtonGR1">
+                <RadioButton
+                    android:text="Single"
+                    android:buttonTint="#e0e0e0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioButtonGR1"
+                    android:textColor="#fff"
+                    android:layout_weight="1"
+                    />
+                <RadioButton
+                    android:text="Double"
+                    android:buttonTint="#e0e0e0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioButtonGR2"
+                    android:textColor="#fff"
+                    android:layout_weight="1"
+                    />
+            </RadioGroup>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="4dp">
+
+        <View android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#fff" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:textSize="16dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:text="Date"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/gameregister_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="#fff"
+                    android:textSize="16dp"
+                    android:gravity="center"
+                    android:text="2017. 01. 08."/>
+
+                <TextView
+                    android:clickable="true"
+                    android:id="@+id/gameregister_date_change"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:layout_margin="4dp"
+                    android:text="CHANGE"
+                    android:fontFamily="sans-serif-thin"
+                    android:textStyle="bold"
+                    android:textColor="#ff30395c"
+                    android:textSize="10dp"
+                    android:gravity="center"
+                    android:background="#fff"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="4dp">
+
+        <View android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#fff" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:textSize="16dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:text="Time"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/gameregister_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="#fff"
+                    android:textSize="16dp"
+                    android:gravity="center"
+                    android:text="17:00"/>
+
+                <TextView
+                    android:clickable="true"
+                    android:id="@+id/gameregister_time_change"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:layout_margin="4dp"
+                    android:text="CHANGE"
+                    android:fontFamily="sans-serif-thin"
+                    android:textStyle="bold"
+                    android:textColor="#ff30395c"
+                    android:textSize="10dp"
+                    android:gravity="center"
+                    android:background="#fff"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="15dp">
+
+        <View android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#fff" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:textSize="16dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:text="Court"/>
+
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:inputType="textPersonName"
+                    android:textColor="#fff"
+                    android:textSize="13dp"
+                    android:ellipsize="end"
+                    android:ems="20"
+                    android:id="@+id/editText"
+                    android:gravity="center"
+                    android:hint="Court Name"
+                    android:textColorHint="#888"
+                    />
+
+        </LinearLayout>
+
+        <View android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="2dp"
+            android:background="#fff" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/radioButtonGR1"
-        android:layout_weight="1"
-        />
+        android:layout_margin="4dp"
+        android:orientation="horizontal">
+        <TextView
+            android:clickable="true"
+            android:id="@+id/gameregister_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DONE"
+            android:fontFamily="sans-serif"
+            android:textColor="#ff30395c"
+            android:textSize="10dp"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:background="#fff"
+            android:layout_marginRight="15dp"/>
 
-    <RadioButton
-        android:text="복식"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/radioButtonGR2"
-        android:layout_weight="1"
-        />
+        <TextView
+            android:clickable="true"
+            android:id="@+id/gameregister_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CANCEL"
+            android:fontFamily="sans-serif"
+            android:textColor="#ff30395c"
+            android:textSize="10dp"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:background="#fff"/>
 
-</RadioGroup>
-
-
-<TextView
-    android:text="경기 날짜"
-    android:textSize="20dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/textViewGR3"
-    android:layout_marginLeft="10dp"
-    android:layout_marginTop="30dp"
-    />
-
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:id="@+id/RL1">
-
-
-    <TextView
-        android:text="YY "
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/textViewYY"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-
-        />
-
-    <TextView
-        android:text="년   "
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_toRightOf="@+id/textViewYY"
-        android:id="@+id/textView년" />
-
-    <TextView
-        android:text="MM "
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignBottom="@+id/textView년"
-        android:layout_toRightOf="@+id/textView년"
-        android:layout_toEndOf="@+id/textView년"
-        android:id="@+id/textViewMM" />
-
-    <TextView
-        android:text="월   "
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_toEndOf="@+id/textViewMM"
-        android:id="@+id/textView월"
-        android:layout_alignTop="@+id/textViewMM"
-        android:layout_toRightOf="@+id/textViewMM" />
-
-    <TextView
-        android:text="DD "
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignBottom="@+id/textView월"
-        android:layout_toRightOf="@+id/textView월"
-        android:layout_toEndOf="@+id/textView월"
-        android:id="@+id/textViewDD" />
-
-    <TextView
-        android:text="일"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_toEndOf="@+id/textViewDD"
-        android:id="@+id/textView일"
-        android:layout_alignTop="@+id/textViewDD"
-        android:layout_toRightOf="@+id/textViewDD" />
-
-
-</RelativeLayout>
-
-<TextView
-    android:text="경기 시간"
-    android:textSize="20dp"
-    android:layout_marginLeft="10dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/textView14" />
-
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="102dp"
-    android:id="@+id/RL2">
-
-    <TextView
-        android:text="HH "
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_toRightOf="@+id/textViewAMPM"
-        android:id="@+id/textViewHH" />
-
-    <TextView
-        android:text="시   "
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignBottom="@+id/textViewHH"
-        android:layout_toRightOf="@+id/textViewHH"
-        android:layout_toEndOf="@+id/textViewHH"
-        android:id="@+id/textView시" />
-
-    <TextView
-        android:text="MM "
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_toEndOf="@+id/textView시"
-        android:id="@+id/textViewMM2"
-        android:layout_alignTop="@+id/textView시"
-        android:layout_toRightOf="@+id/textView시" />
-
-    <TextView
-        android:text="분   "
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignBottom="@+id/textViewMM2"
-        android:layout_toRightOf="@+id/textViewMM2"
-        android:layout_toEndOf="@+id/textViewMM2"
-        android:id="@+id/textView분" />
-
-</RelativeLayout>
-
-<TextView
-    android:text="경기 장소"
-    android:textSize="20dp"
-    android:layout_marginLeft="10dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/textView15" />
-
-<EditText
-    android:layout_marginTop="10dp"
-    android:layout_marginLeft="10dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:inputType="textPersonName"
-    android:ems="10"
-    android:id="@+id/editText"
-    android:hint="테니스장 이름을 입력해주세요."
-    />
-
-<Button
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/addressbtn"
-    android:text="입력"
-    />
-
+    </LinearLayout>
 </LinearLayout>
+
+

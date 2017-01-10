@@ -134,6 +134,11 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    public void loadGameFinder() {
+        Snackbar.make(findViewById(R.id.main_container), "Game has been registered!", Snackbar.LENGTH_SHORT).show();
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, gameFinder).commit();
+    }
+
     private boolean isLoggedIn() {
         return AccessToken.getCurrentAccessToken() != null;
     }
