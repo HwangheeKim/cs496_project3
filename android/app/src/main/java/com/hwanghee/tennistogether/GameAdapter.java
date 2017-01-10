@@ -1,6 +1,7 @@
 package com.hwanghee.tennistogether;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.Image;
@@ -11,7 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,123 +31,62 @@ import java.util.Comparator;
  * Created by q on 2017-01-06.
  */
 
-public class GameAdapter extends RecyclerView.Adapter<GameViewHolder> {
+public class GameAdapter extends BaseAdapter {
     private ArrayList<GameData> gameDatas;
+    int[] colors = {0xff1e1d20, 0xff30395c, 0xff2a2c2b, 0xff14212b, 0xff083643, 0xff0e5066 };
 
-    public GameAdapter() {gameDatas = new ArrayList<GameData>();}
-
-    public GameAdapter(ArrayList<GameData> gameDatas) {
-        this.gameDatas = gameDatas;
+    public GameAdapter() {
+        gameDatas = new ArrayList<>();
     }
 
     @Override
-    public GameViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View inflatedView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_game, parent, false);
-        return new GameViewHolder(inflatedView);
+    public int getCount() {
+        return gameDatas.size();
     }
 
     @Override
-    public void onBindViewHolder(GameViewHolder holder, final int position) {
-        GameData gameData = gameDatas.get(position);
-
-        if(!gameDatas.get(position).isVisible()){
-            holder.gameItem.setVisibility(View.GONE);
-            return;
-        } else {
-            holder.gameItem.setVisibility(View.VISIBLE);
-        }
-
-        holder.courtText.setText(gameData.getCourt());
-        holder.playtimeText.setText(gameData.getPlaytime());
-        setImage(holder.player1Image, gameDatas.get(position).getPlayer1());
-        setImage(holder.player2Image, gameDatas.get(position).getPlayer2());
-        setImage(holder.player3Image, gameDatas.get(position).getPlayer3());
-        setImage(holder.player4Image, gameDatas.get(position).getPlayer4());
-
-        if(gameDatas.get(position).getType()) {
-            holder.player2Image.setVisibility(View.GONE);
-            holder.player4Image.setVisibility(View.GONE);
-        } else {
-            holder.player2Image.setVisibility(View.VISIBLE);
-            holder.player4Image.setVisibility(View.VISIBLE);
-        }
-
-        if(!gameDatas.get(position).getScore().equals("")) {
-            holder.gameItem.setCardBackgroundColor(Color.GRAY);
-            holder.gameItem.setOnClickListener(null);
-        } else {
-            if(gameDatas.get(position).isJoined()) {
-                holder.gameItem.setCardBackgroundColor(Color.rgb(0xbb,0xcc,0xff));
-            } else {
-                holder.gameItem.setCardBackgroundColor(Color.WHITE);
-            }
-            holder.gameItem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), GameInformation.class);
-                    intent.putExtra("gameID", GameFinder.mAdapter.get(position).getGameID());
-                    ((Activity)v.getContext()).startActivityForResult(intent, MainActivity.ADAPTER_RELOAD);
-                }
-            });
-        }
+    public GameData getItem(int position) {
+        return gameDatas.get(position);
     }
 
-    private void setImage(final ImageView imageView, String userID) {
-        if (userID==null || userID.length() == 0) {
-            imageView.setImageResource(R.drawable.ic_blank);
-            return;
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(final int position, View convertView, final ViewGroup parent) {
+        if(convertView==null) {
+            LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.item_game, parent, false);
         }
 
-        Ion.with(imageView.getContext()).load(MainActivity.serverURL+"/user/"+userID)
-                .asJsonObject().setCallback(new FutureCallback<JsonObject>() {
+        convertView.findViewById(R.id.game_item).setBackgroundColor(colors[position%colors.length]);
+        convertView.findViewById(R.id.game_item).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCompleted(Exception e, JsonObject result) {
-                Log.d("setImage", result.toString());
-                Picasso.with(imageView.getContext())
-                        .load(result.get("picture").getAsString())
-                        .into(imageView);
+            public void onClick(View v) {
+                Intent intent = new Intent(parent.getContext(), GameInformation.class);
+                intent.putExtra("gameID", gameDatas.get(position).getGameID());
+                ((Activity)v.getContext()).startActivityForResult(intent, MainActivity.ADAPTER_RELOAD);
             }
         });
-    }
 
-    @Override
-    public int getItemCount() {
-        return gameDatas.size();
+
+        ((TextView)convertView.findViewById(R.id.game_court)).setText(gameDatas.get(position).getCourt());
+        ((TextView)convertView.findViewById(R.id.game_date)).setText(gameDatas.get(position).getPlaytime());
+
+        // TODO : change picture
+
+        return convertView;
     }
 
     public void add(String gameID, boolean isSingle, String playtime, String court, boolean isMatched, boolean winner, String score,
                     String uid1, String uid2, String uid3, String uid4) {
         gameDatas.add(new GameData(gameID, isSingle, playtime, uid1, uid2, uid3, uid4, court, winner, isMatched, score));
-        notifyItemInserted(gameDatas.size()-1);
+        notifyDataSetChanged();
     }
 
     public void clear() { gameDatas.clear(); notifyDataSetChanged(); }
-
-    public GameData get(int position) { return gameDatas.get(position); }
-
-    public int size() { return gameDatas.size(); }
-}
-
-class GameViewHolder extends RecyclerView.ViewHolder {
-    protected CardView gameItem;
-    protected TextView courtText;
-    protected TextView playtimeText;
-    protected ImageView player1Image;
-    protected ImageView player2Image;
-    protected ImageView player3Image;
-    protected ImageView player4Image;
-
-    public GameViewHolder(View itemView) {
-        super(itemView);
-
-        gameItem = (CardView)itemView.findViewById(R.id.game_item);
-        courtText = (TextView)itemView.findViewById(R.id.game_court);
-        playtimeText = (TextView)itemView.findViewById(R.id.game_time);
-        player1Image = (ImageView)itemView.findViewById(R.id.game_img1);
-        player2Image = (ImageView)itemView.findViewById(R.id.game_img2);
-        player3Image = (ImageView)itemView.findViewById(R.id.game_img3);
-        player4Image = (ImageView)itemView.findViewById(R.id.game_img4);
-    }
 
 }
 

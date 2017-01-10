@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 
 import com.facebook.AccessToken;
 import com.github.clans.fab.FloatingActionButton;
@@ -29,9 +31,8 @@ public class GameFinder extends Fragment {
     public static GameAdapter mAdapter;
     public static int GAME_FILTERING = 0x0201;
     private OnFragmentInteractionListener mListener;
-    private RecyclerView mRecyclerView;
-    private LinearLayoutManager mLayoutManager;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private GridView gridView;
 
     private boolean[] options = {true, true, true};
     // Single Game, Double Game, All/Joinable Game
@@ -42,11 +43,9 @@ public class GameFinder extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_game_finder, container, false);
 
-        mRecyclerView = (RecyclerView)view.findViewById(R.id.gamefinder_list);
-        mLayoutManager = new LinearLayoutManager(view.getContext());
         mAdapter = new GameAdapter();
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mAdapter);
+        gridView = (GridView)view.findViewById(R.id.gamefinder_list);
+        gridView.setAdapter(mAdapter);
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.gamefinder_swiperefresh);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -114,18 +113,18 @@ public class GameFinder extends Fragment {
                                     record.get("player2").getAsString(), record.get("player3").getAsString(),
                                     record.get("player4").getAsString());
 
-                            if((mAdapter.get(i).getType()==true && options[0]==false) ||
-                                    (mAdapter.get(i).getType()==false && options[1]==false) ||
+                            if((mAdapter.getItem(i).getType()==true && options[0]==false) ||
+                                    (mAdapter.getItem(i).getType()==false && options[1]==false) ||
                                     (isJoinable(record)==false && options[2]==false)) {
-                                mAdapter.get(i).setVisible(false);
+                                mAdapter.getItem(i).setVisible(false);
                             } else {
-                                mAdapter.get(i).setVisible(true);
+                                mAdapter.getItem(i).setVisible(true);
                             }
 
                             if(alreadyInGame(record)) {
-                                mAdapter.get(i).setJoined(true);
+                                mAdapter.getItem(i).setJoined(true);
                             }
-                            else mAdapter.get(i).setJoined(false);
+                            else mAdapter.getItem(i).setJoined(false);
                         }
                     }
                 });
