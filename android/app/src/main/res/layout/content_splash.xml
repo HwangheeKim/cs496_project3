@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="100"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_add" />
+        android:scaleType="centerCrop"
+        android:src="@drawable/splash1" />
 
 </LinearLayout>
