@@ -27,62 +27,32 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public class ProfileEdition extends AppCompatActivity {
-    ImageView PEuserImage;
-    TextView PEuserName;
-    EditText PEuserPhone;
-    EditText PEuserGroup;
     String InputPhone;
     String InputGroup;
-    Button EditButton;
+    TextView userName;
+    EditText groupEdit;
+    EditText phoneEdit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_edition);
 
+        userName = (TextView) findViewById(R.id.edition_name);
+        groupEdit = (EditText) findViewById(R.id.edition_group);
+        phoneEdit = (EditText) findViewById(R.id.edition_phone);
 
+        userName.setText(MainActivity.userName);
+        phoneEdit.setText(getIntent().getExtras().getString("Phone"));
+        groupEdit.setText(getIntent().getExtras().getString("Group"));
 
-        PEuserImage = (ImageView) findViewById(R.id.PEiv);
-        PEuserName = (TextView) findViewById(R.id.PEtv);
-        PEuserPhone = (EditText) findViewById(R.id.PEet1);
-        PEuserGroup = (EditText) findViewById(R.id.PEet2);
-        EditButton = (Button) findViewById(R.id.PEbt);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-        loadInfoView();
-        PEuserName.setText(MainActivity.userName);
-        PEuserPhone.setText(getIntent().getExtras().getString("Phone"));
-        PEuserGroup.setText(getIntent().getExtras().getString("Group"));
-        EditButton.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.edition_done).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                InputPhone = PEuserPhone.getText().toString();
-                InputGroup = PEuserGroup.getText().toString();
+                InputPhone = phoneEdit.getText().toString();
+                InputGroup = groupEdit.getText().toString();
 
                 editProfile();
-
-            }
-        });
-
-    }
-    public void loadInfoView(){
-
-        Ion.with(PEuserImage.getContext()).load(MainActivity.serverURL+"/user/"+ MainActivity.userID)
-                .asJsonObject().setCallback(new FutureCallback<JsonObject>() {
-            @Override
-            public void onCompleted(Exception e, JsonObject result) {
-                Log.d("setImage", result.toString());
-                Picasso.with(PEuserImage.getContext())
-                        .load(result.get("picture").getAsString())
-                        .into(PEuserImage);
             }
         });
     }
@@ -102,14 +72,11 @@ public class ProfileEdition extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
         Ion.with(getApplicationContext()).load(MainActivity.serverURL + "/user/enroll")
                 .setJsonObjectBody(json).asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
-                //       Toast.makeText(getApplicationContext(), "POSTED", Toast.LENGTH_SHORT).show();
-                        // Toast.makeText(getApplicationContext(), MainActivity.serverURL, Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent();
                         setResult(35, intent);
                         finish();

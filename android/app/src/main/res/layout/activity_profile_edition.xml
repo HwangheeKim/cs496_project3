@@ -1,56 +1,212 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.hwanghee.tennistogether.ProfileEdition"
+    android:gravity="center"
+    android:background="#ff461e54"
     android:orientation="vertical">
 
-    <ImageView
+    <TextView
+        android:id="@+id/edition_name"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:textColor="#fff"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif"
+        android:text="" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/PEiv"/>
+        android:orientation="vertical"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="4dp">
+
+        <View android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#fff" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:textSize="16dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:text="Group"/>
+
+            <EditText
+                android:singleLine="true"
+                android:id="@+id/edition_group"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:textColor="#fff"
+                android:textSize="16dp"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="4dp">
+
+        <View android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#fff" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:textSize="16dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:text="Contacts"/>
+
+            <EditText
+                android:singleLine="true"
+                android:id="@+id/edition_phone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:textColor="#fff"
+                android:textSize="16dp"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="4dp">
+
+        <View android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#fff" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:textSize="16dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:text="Equipment"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:textColor="#aaa"
+                android:textSize="16dp"
+                android:gravity="center"
+                android:text="To be implemented"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="15dp">
+
+        <View android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#fff" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:textSize="16dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:text="Ranking"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:textColor="#aaa"
+                android:textSize="16dp"
+                android:gravity="center"
+                android:text="To be implemented"/>
+
+        </LinearLayout>
+
+        <View android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="2dp"
+            android:background="#fff" />
+    </LinearLayout>
 
     <TextView
-        android:layout_width="match_parent"
+        android:clickable="true"
+        android:id="@+id/edition_done"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/PEtv"
-        android:layout_gravity="center"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="휴대폰 번호"
-        android:id="@+id/nothing"/>
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/PEet1"
-        android:inputType="phone"
-        android:digits="0123456789+"
-        android:singleLine="true"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="소속 그룹"
-        android:id="@+id/nothing2"/>
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/PEet2"
-        android:singleLine="true"
-        />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="입력"
-        android:id="@+id/PEbt"/>
+        android:text="DONE"
+        android:fontFamily="sans-serif"
+        android:textSize="10dp"
+        android:gravity="center"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textColor="#ff461e54"
+        android:background="#fff"/>
 
 </LinearLayout>

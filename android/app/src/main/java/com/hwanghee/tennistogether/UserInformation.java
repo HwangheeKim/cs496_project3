@@ -89,23 +89,6 @@ public class UserInformation extends AppCompatActivity {
     public void updateview(){
         loadInfoView();
         loadInfoData();
-
-        intent = new Intent(getApplicationContext(), ProfileEdition.class);
-
-
-        if(MainActivity.userID.equals(userIDclicked)) {
-            findViewById(R.id.userinfo_fab).setVisibility(View.VISIBLE);
-
-            infoEditButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivityForResult(intent, 35);
-                }
-            });
-        } else {
-            findViewById(R.id.userinfo_fab).setVisibility(View.GONE);
-        }
-//        Toast.makeText(getApplicationContext(), userIDclicked , Toast.LENGTH_SHORT).show();
     }
 
 

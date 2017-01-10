@@ -62,20 +62,15 @@ public class UserInformationFragment extends Fragment {
         this.loadInfoData();
 
         intent = new Intent(getApplicationContext(), ProfileEdition.class);
-
-
-            infoEditButton.setVisibility(View.VISIBLE);
-
-            infoEditButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    intent.putExtra("Phone", userPhone);
-                    intent.putExtra("Group", userGroup);
-                    startActivityForResult(intent, 35);
-                }
-            });
-
+        infoEditButton.setVisibility(View.VISIBLE);
+        infoEditButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent.putExtra("Phone", userPhone);
+                intent.putExtra("Group", userGroup);
+                startActivityForResult(intent, 35);
+            }
+        });
 
         return rootView;
     }
@@ -91,18 +86,6 @@ public class UserInformationFragment extends Fragment {
     public void updateview(){
         loadInfoView();
         loadInfoData();
-
-        intent = new Intent(getApplicationContext(), ProfileEdition.class);
-
-
-
-            rootView.findViewById(R.id.userinfof_fab).setVisibility(View.VISIBLE);
-            infoEditButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivityForResult(intent, 35);
-                }
-            });
     }
 
     public void loadInfoView(){
@@ -120,7 +103,6 @@ public class UserInformationFragment extends Fragment {
     }
 
     public void loadInfoData() {
-//        infoAdapter.clear();
         Ion.with(getApplicationContext())
                 .load(MainActivity.serverURL + "/user/" + MainActivity.userID)
                 .asJsonObject()
@@ -128,7 +110,6 @@ public class UserInformationFragment extends Fragment {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
 
-//                        userRecord = jasonResult.get("_phone").getAsString();
                         String nameDecoded = "";
                         try {
                             nameDecoded = URLDecoder.decode(result.get("name").getAsString(), "utf-8");
