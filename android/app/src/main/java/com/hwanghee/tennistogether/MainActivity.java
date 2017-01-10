@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity
     private GameFinder gameFinder;
     private GameRegisterFragment gameRegister;
     private MyGameFinder myGameFinder;
+    private UserInformationFragment userInformationFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity
         gameFinder = new GameFinder();
         gameRegister = new GameRegisterFragment();
         myGameFinder = new MyGameFinder();
+        userInformationFragment = new UserInformationFragment();
 
         // Initial Screen
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container, gameFinder).commit();
@@ -101,7 +103,8 @@ public class MainActivity extends AppCompatActivity
         findViewById(R.id.drawer_me).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.main_container, userInformationFragment).commit();
                 ((DrawerLayout)findViewById(R.id.main_drawer)).closeDrawer(Gravity.LEFT);
             }
         });

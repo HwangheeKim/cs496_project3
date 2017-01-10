@@ -155,5 +155,16 @@ public class UserInformation extends AppCompatActivity {
                     }
                 });
 
+        Ion.with(getApplicationContext())
+                .load(MainActivity.serverURL + "/user/record/" + userIDclicked)
+                .asJsonObject().setCallback(new FutureCallback<JsonObject>() {
+            @Override
+            public void onCompleted(Exception e, JsonObject result) {
+                int win = result.get("win").getAsInt();
+                int lose = result.get("lose").getAsInt();
+
+                recordText.setText("" + win + " win   " + lose + " lose");
+            }
+        });
     }
 }
