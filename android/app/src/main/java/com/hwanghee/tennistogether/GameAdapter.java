@@ -76,7 +76,7 @@ public class GameAdapter extends BaseAdapter {
 
         ((TextView)convertView.findViewById(R.id.game_court)).setText(gameDatas.get(position).getCourt());
 
-       
+
         ((TextView)convertView.findViewById(R.id.game_date)).setText(MyParser.getDate(gameDatas.get(position).getPlaytime()));
         ((TextView)convertView.findViewById(R.id.game_time)).setText(MyParser.getTime(gameDatas.get(position).getPlaytime()));
 
