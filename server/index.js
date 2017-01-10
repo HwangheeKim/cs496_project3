@@ -281,18 +281,20 @@ app.get('/game/drop/:gameID', function(req, res) {
 app.get('/game/cancel/:gameID/:userID', function(req, res) {
     console.log("[Game/cancel] Got request game " + req.params.gameID + " # userID " + req.params.userID);
 
-    Game.findOne({_id:req.params.gameID}, function(err, result) {
-        if(result['player2']==req.params.userID) result['player2'] = "";
-        if(result['player3']==req.params.userID) result['player3'] = "";
-        if(result['player4']==req.params.userID) result['player4'] = "";
-        Game.update({_id:req.params.gameID}, result, function(err, result1) {
-            if (err) throw err;
+    if (req.params.gameID.match(/^[0-9a-fA-F]{24}$/)) {
+        Game.findOne({_id:req.params.gameID}, function(err, result) {
+            if(result['player2']==req.params.userID) result['player2'] = "";
+            if(result['player3']==req.params.userID) result['player3'] = "";
+            if(result['player4']==req.params.userID) result['player4'] = "";
+            Game.update({_id:req.params.gameID}, result, function(err, result1) {
+                if (err) throw err;
 
-            res.writeHead(200, {'Content-Type':'application/json'});
-            res.write(JSON.stringify({result:'OK'}));
-            res.end();
+                res.writeHead(200, {'Content-Type':'application/json'});
+                res.write(JSON.stringify({result:'OK'}));
+                res.end();
+            });
         });
-    });
+    }
 });
 
 
