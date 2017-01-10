@@ -150,5 +150,16 @@ public class UserInformationFragment extends Fragment {
                     }
                 });
 
+        Ion.with(getApplicationContext())
+                .load(MainActivity.serverURL + "/user/record/" + MainActivity.userID)
+                .asJsonObject().setCallback(new FutureCallback<JsonObject>() {
+            @Override
+            public void onCompleted(Exception e, JsonObject result) {
+                int win = result.get("win").getAsInt();
+                int lose = result.get("lose").getAsInt();
+
+                recordText.setText("" + win + " win   " + lose + " lose");
+            }
+        });
     }
 }
