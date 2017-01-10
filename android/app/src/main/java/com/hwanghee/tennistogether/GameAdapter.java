@@ -18,14 +18,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.squareup.picasso.Picasso;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 
 /**
  * Created by q on 2017-01-06.
@@ -73,7 +76,7 @@ public class GameAdapter extends BaseAdapter {
 
         ((TextView)convertView.findViewById(R.id.game_court)).setText(gameDatas.get(position).getCourt());
 
-        // 9월 27일
+        // TODO : Format 9월 27일
         ((TextView)convertView.findViewById(R.id.game_date)).setText(gameDatas.get(position).getPlaytime());
 
         // 17:00
@@ -130,6 +133,13 @@ public class GameAdapter extends BaseAdapter {
 
     public void clear() { gameDatas.clear(); notifyDataSetChanged(); }
 
+    public void removeInvisible() {
+        Iterator<GameData> iter = gameDatas.iterator();
+        while (iter.hasNext()) {
+            GameData g = iter.next();
+            if (g.isVisible()==false) iter.remove();
+        }
+    }
 }
 
 class GameData {

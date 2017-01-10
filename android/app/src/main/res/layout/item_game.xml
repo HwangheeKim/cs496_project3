@@ -14,7 +14,7 @@
         android:id="@+id/game_court"
         android:textColor="#fff"
         android:textStyle="bold"
-        android:textSize="20dp"
+        android:textSize="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"

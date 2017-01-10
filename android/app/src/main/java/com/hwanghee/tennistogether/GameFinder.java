@@ -4,12 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 
 import com.facebook.AccessToken;
-import com.github.clans.fab.FloatingActionButton;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
@@ -59,15 +56,6 @@ public class GameFinder extends Fragment {
 
         loadGameData(view);
 
-        FloatingActionButton registerGame = (FloatingActionButton)view.findViewById(R.id.gamefinder_add);
-        registerGame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(view.getContext(), GameRegister.class);
-                startActivityForResult(intent, MainActivity.ADAPTER_RELOAD);
-            }
-        });
-
         FloatingActionButton searchGame = (FloatingActionButton)view.findViewById(R.id.gamefinder_search);
         searchGame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,7 +75,7 @@ public class GameFinder extends Fragment {
         return view;
     }
 
-
+    // Load from server and apply filter
     public void loadGameData(View view) {
         mAdapter.clear();
         Ion.with(view.getContext())
@@ -117,6 +105,7 @@ public class GameFinder extends Fragment {
                                     (mAdapter.getItem(i).getType()==false && options[1]==false) ||
                                     (isJoinable(record)==false && options[2]==false)) {
                                 mAdapter.getItem(i).setVisible(false);
+                                Log.d("SOMETHING", "HAS BEEN SET INVISIBLE");
                             } else {
                                 mAdapter.getItem(i).setVisible(true);
                             }
@@ -126,6 +115,8 @@ public class GameFinder extends Fragment {
                             }
                             else mAdapter.getItem(i).setJoined(false);
                         }
+
+                        mAdapter.removeInvisible();
                     }
                 });
     }
