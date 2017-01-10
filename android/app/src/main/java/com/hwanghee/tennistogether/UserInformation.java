@@ -1,54 +1,38 @@
 package com.hwanghee.tennistogether;
 
 import android.content.Intent;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.Toolbar;
 import android.text.Layout;
 import android.util.Log;
 import android.widget.Space;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.squareup.picasso.Picasso;
 
 import java.net.URLDecoder;
-import java.util.ArrayList;
-import android.view.LayoutInflater;
-import static android.R.attr.data;
-import static android.R.attr.inflatedId;
 
 public class UserInformation extends AppCompatActivity {
     ImageView UserImage;
-    TextView UItv1;
-    TextView UItv2;
-    TextView UItv3;
-    TextView UItv4;
-    Button InfoEditButton;
-    Space UserSpace;
+    TextView groupText;
+    TextView recordText;
+    TextView phoneText;
+    FloatingActionButton infoEditButton;
     String userIDclicked;
     Layout layout;
     String userName;
     String userPhone;
     String userGroup;
-    String userRecord;
     Intent intent;
-//    private ArrayList<InfoData> infoDatas;
-//    public UserInformation() {infoDatas = new ArrayList<GameData>();}
-//    public UserInformation(ArrayList<InfoData> infoDatas) {
-//        this.infoDatas = infoDatas;
-//    }
-//    GameInformation에서 사람을 누르면 UserInformation Fragment로 전환이 되고
-//    누른 Layout의 유저넘버를 Intent로 받아와서 해당 유저 ID가 GameFinder에서 받아온 ID와 같으면
-//    수정 버튼을 활성화 시키고 다르면
-//    해당 유저의 사진 이름 전화번호 (개인 장비)를 받아오고 게임 데이터를 분석해서 전적을 출력한다.
-
+    Toolbar toolbar;
 
 
     @Override
@@ -57,34 +41,29 @@ public class UserInformation extends AppCompatActivity {
         setContentView(R.layout.activity_user_information);
         //InfoData infoData = infoDatas.get(position);
 
+        toolbar = (Toolbar) findViewById(R.id.userinfo_toolbar);
+        toolbar.setTitle("");
+        toolbar.setBackgroundColor(0x00461e54);
+        setSupportActionBar(toolbar);
 
-        UItv1 = (TextView) findViewById(R.id.userInfoText1);
-        UItv2 = (TextView) findViewById(R.id.userInfoText2);
-        UItv3 = (TextView) findViewById(R.id.userInfoText3);
-        UItv4 = (TextView) findViewById(R.id.userInfoText4);
+        groupText = (TextView) findViewById(R.id.userinfo_group);
+        phoneText = (TextView) findViewById(R.id.userinfo_phone);
+        recordText = (TextView) findViewById(R.id.userinfo_record);
         UserImage = (ImageView) findViewById(R.id.userInfoImage);
-        InfoEditButton = (Button) findViewById(R.id.InfoEditButton);
-        UserSpace = (Space) findViewById(R.id.UserSpace);
-        UserSpace.getResources().getDrawable(R.drawable.border);
+        infoEditButton = (FloatingActionButton) findViewById(R.id.userinfo_fab);
         userIDclicked = getIntent().getExtras().getString("userID");
 
-
-
-
-        //Toast.makeText(getApplicationContext(), MainActivity.userID , Toast.LENGTH_SHORT).show();
+        ((AppBarLayout)findViewById(R.id.userinfo_appbar)).setExpanded(true);
 
         this.loadInfoView();
         this.loadInfoData();
 
-//        setContentView(R.layout.activity_user_information);
-
         intent = new Intent(getApplicationContext(), ProfileEdition.class);
 
-
         if(MainActivity.userID.equals(userIDclicked)) {
-            findViewById(R.id.InfoEditButton).setVisibility(View.VISIBLE);
+            infoEditButton.setVisibility(View.VISIBLE);
 
-            InfoEditButton.setOnClickListener(new View.OnClickListener() {
+            infoEditButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
@@ -94,9 +73,8 @@ public class UserInformation extends AppCompatActivity {
                 }
             });
         } else {
-            findViewById(R.id.InfoEditButton).setVisibility(View.GONE);
+            infoEditButton.setVisibility(View.GONE);
         }
-//        Toast.makeText(getApplicationContext(), userIDclicked , Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -116,16 +94,16 @@ public class UserInformation extends AppCompatActivity {
 
 
         if(MainActivity.userID.equals(userIDclicked)) {
-            findViewById(R.id.InfoEditButton).setVisibility(View.VISIBLE);
+            findViewById(R.id.userinfo_fab).setVisibility(View.VISIBLE);
 
-            InfoEditButton.setOnClickListener(new View.OnClickListener() {
+            infoEditButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     startActivityForResult(intent, 35);
                 }
             });
         } else {
-            findViewById(R.id.InfoEditButton).setVisibility(View.GONE);
+            findViewById(R.id.userinfo_fab).setVisibility(View.GONE);
         }
 //        Toast.makeText(getApplicationContext(), userIDclicked , Toast.LENGTH_SHORT).show();
     }
@@ -171,9 +149,9 @@ public class UserInformation extends AppCompatActivity {
                         userPhone = result.get("phone").getAsString();
 //                        Toast.makeText(getApplicationContext(), userPhone, Toast.LENGTH_SHORT).show();
                         userGroup = groupDecoded;
-                        UItv1.setText(nameDecoded);
-                        UItv2.setText(userPhone);
-                        UItv3.setText(groupDecoded);
+                        phoneText.setText(userPhone);
+                        groupText.setText(groupDecoded);
+                        getSupportActionBar().setTitle(nameDecoded);
                     }
                 });
 

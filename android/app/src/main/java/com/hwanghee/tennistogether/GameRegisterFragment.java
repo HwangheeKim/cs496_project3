@@ -118,15 +118,19 @@ public class GameRegisterFragment extends Fragment {
             public void onClick(View v) {
                 String inPutText = editText.getText().toString();
                 address = inPutText;
+                if(address.equals("")) {
+                    Snackbar.make(rootView, "Enter the court name!", Snackbar.LENGTH_SHORT).show();
+                    return;
+                }
                 setVariables();
-                ((MainActivity)getActivity()).loadGameFinder();
+                ((MainActivity)getActivity()).loadGameFinder(true);
             }
         });
 
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).loadGameFinder();
+                ((MainActivity)getActivity()).loadGameFinder(false);
             }
         });
         return rootView;
