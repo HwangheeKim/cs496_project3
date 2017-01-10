@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity
     static String userToken = "";
 
     private GameFinder gameFinder;
+    private GameRegisterFragment gameRegister;
     private MyGameFinder myGameFinder;
 
     @Override
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         gameFinder = new GameFinder();
+        gameRegister = new GameRegisterFragment();
         myGameFinder = new MyGameFinder();
 
         // Initial Screen
@@ -81,7 +83,8 @@ public class MainActivity extends AppCompatActivity
         findViewById(R.id.drawer_addgame).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.main_container, gameRegister).commit();
                 ((DrawerLayout)findViewById(R.id.main_drawer)).closeDrawer(Gravity.LEFT);
             }
         });

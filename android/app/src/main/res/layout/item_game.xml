@@ -15,8 +15,9 @@
         android:textColor="#fff"
         android:textStyle="bold"
         android:textSize="20dp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:layout_marginBottom="10dp"
         android:text="목동 테니스코트"/>
 
@@ -47,21 +48,25 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/game_p1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/account"/>
 
         <ImageView
+            android:id="@+id/game_p2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/account_fade"/>
 
         <ImageView
+            android:id="@+id/game_p3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/account_fade"/>
 
         <ImageView
+            android:id="@+id/game_p4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/account_fade"/>

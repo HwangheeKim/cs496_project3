@@ -71,13 +71,55 @@ public class GameAdapter extends BaseAdapter {
             }
         });
 
-
         ((TextView)convertView.findViewById(R.id.game_court)).setText(gameDatas.get(position).getCourt());
+
+        // 9월 27일
         ((TextView)convertView.findViewById(R.id.game_date)).setText(gameDatas.get(position).getPlaytime());
 
-        // TODO : change picture
+        // 17:00
+//        ((TextView)convertView.findViewById(R.id.game_time)).setText(gameDatas.get(position).getPlaytime());
+
+        if(gameDatas.get(position).getType()) { // If the game is single
+            convertView.findViewById(R.id.game_p3).setVisibility(View.GONE);
+            convertView.findViewById(R.id.game_p4).setVisibility(View.GONE);
+        } else {
+            convertView.findViewById(R.id.game_p3).setVisibility(View.VISIBLE);
+            convertView.findViewById(R.id.game_p4).setVisibility(View.VISIBLE);
+        }
+
+        int joinedPlayer = playerJoined(position);
+        switch (joinedPlayer){
+            case 1:
+                ((ImageView)convertView.findViewById(R.id.game_p2)).setImageResource(R.drawable.account_fade);
+                ((ImageView)convertView.findViewById(R.id.game_p3)).setImageResource(R.drawable.account_fade);
+                ((ImageView)convertView.findViewById(R.id.game_p4)).setImageResource(R.drawable.account_fade);
+                break;
+            case 2:
+                ((ImageView)convertView.findViewById(R.id.game_p2)).setImageResource(R.drawable.account);
+                ((ImageView)convertView.findViewById(R.id.game_p3)).setImageResource(R.drawable.account_fade);
+                ((ImageView)convertView.findViewById(R.id.game_p4)).setImageResource(R.drawable.account_fade);
+                break;
+            case 3:
+                ((ImageView)convertView.findViewById(R.id.game_p2)).setImageResource(R.drawable.account);
+                ((ImageView)convertView.findViewById(R.id.game_p3)).setImageResource(R.drawable.account);
+                ((ImageView)convertView.findViewById(R.id.game_p4)).setImageResource(R.drawable.account_fade);
+                break;
+            case 4:
+                ((ImageView)convertView.findViewById(R.id.game_p2)).setImageResource(R.drawable.account);
+                ((ImageView)convertView.findViewById(R.id.game_p3)).setImageResource(R.drawable.account);
+                ((ImageView)convertView.findViewById(R.id.game_p4)).setImageResource(R.drawable.account);
+                break;
+        }
 
         return convertView;
+    }
+
+    private int playerJoined(int position) {
+        int joined = 1;
+        if(!gameDatas.get(position).getPlayer2().equals("")) joined++;
+        if(!gameDatas.get(position).getPlayer3().equals("")) joined++;
+        if(!gameDatas.get(position).getPlayer4().equals("")) joined++;
+        return joined;
     }
 
     public void add(String gameID, boolean isSingle, String playtime, String court, boolean isMatched, boolean winner, String score,
