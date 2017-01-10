@@ -45,6 +45,8 @@ public class GameRegisterFragment extends Fragment {
     TextView GRtv1;
     TextView GRtv2;
     TextView GRtv3;
+    TextView GRtv4;
+    TextView GRtv5;
     String address = new String();
     RadioGroup radio;
     private SimpleLocation location;
@@ -62,12 +64,18 @@ public class GameRegisterFragment extends Fragment {
         GRtv1 = (TextView) rootView.findViewById(R.id.textViewYY);
         GRtv2 = (TextView) rootView.findViewById(R.id.textViewMM);
         GRtv3 = (TextView) rootView.findViewById(R.id.textViewDD);
+        GRtv4 = (TextView) rootView.findViewById(R.id.textViewHH);
+        GRtv5 = (TextView) rootView.findViewById(R.id.textViewMM2);
         year = current.get(Calendar.YEAR);
         month = current.get(Calendar.MONTH);
         day = current.get(Calendar.DAY_OF_MONTH);
+        hour = current.get(Calendar.HOUR_OF_DAY);
+        minute = current.get(Calendar.MINUTE);
         GRtv1.setText(Integer.toString(year));
         GRtv2.setText(Integer.toString(month + 1));
         GRtv3.setText(Integer.toString(day));
+        GRtv4.setText(Integer.toString(hour));
+        GRtv5.setText(Integer.toString(minute));
 
         final EditText editText = (EditText) rootView.findViewById(R.id.editText);
         Button addressBtn = (Button) rootView.findViewById(R.id.addressbtn);
@@ -210,6 +218,7 @@ public class GameRegisterFragment extends Fragment {
             View v = inflater.inflate(R.layout.fragment_game_time, container, false);
 
             final TimePicker timePicker = (TimePicker)v.findViewById(R.id.timePicker);
+            timePicker.setIs24HourView(true);
             Calendar c = Calendar.getInstance();
             timePicker.setCurrentHour(c.get(Calendar.HOUR));
             timePicker.setCurrentMinute(c.get(Calendar.MINUTE));
