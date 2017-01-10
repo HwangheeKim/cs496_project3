@@ -1,21 +1,26 @@
 <android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/mygamefinder_main"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:id="@+id/mygamefinder_main"
+android:background="#ff43614a"
+android:layout_height="match_parent"
+android:layout_width="match_parent">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/mygamefinder_swiperefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
+        <GridView
             android:id="@+id/mygamefinder_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </android.support.v7.widget.RecyclerView>
+            android:layout_height="match_parent"
+            android:horizontalSpacing="0dp"
+            android:verticalSpacing="0dp"
+            android:numColumns="1"
+            app:layout_scrollFlags="scroll|enterAlways">
+        </GridView>
 
     </android.support.v4.widget.SwipeRefreshLayout>
-</android.support.design.widget.CoordinatorLayout>
 
+</android.support.design.widget.CoordinatorLayout>

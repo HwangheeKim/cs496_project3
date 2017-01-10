@@ -34,7 +34,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 public class MainActivity extends AppCompatActivity
-        implements GameFinder.OnFragmentInteractionListener, MyGameFinder.OnFragmentInteractionListener,
+        implements GameFinder.OnFragmentInteractionListener,
                     MyInfo.OnFragmentInteractionListener{
 
     static int REQUEST_LOGIN = 0xabcd;
