@@ -30,8 +30,10 @@ import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
+import java.lang.reflect.Array;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -45,6 +47,7 @@ public class GameRegisterFragment extends Fragment {
     int year, month, day, hour, minute;
     TextView dateView;
     TextView timeView;
+    String coordinate;
 
     String address = new String();
     RadioGroup radio;
@@ -77,6 +80,7 @@ public class GameRegisterFragment extends Fragment {
         radio = (RadioGroup) rootView.findViewById(R.id.RadioGroup1);
         location = new SimpleLocation(this.getContext());
 
+
         if (!location.hasLocationEnabled()) {
             // ask the user to enable location access
             SimpleLocation.openSettings(this.getContext());
@@ -84,8 +88,9 @@ public class GameRegisterFragment extends Fragment {
 
         final double latitude = location.getLatitude();
         final double longitude = location.getLongitude();
-        Toast.makeText(getContext(), Double.toString(latitude) , Toast.LENGTH_SHORT).show();
-        Toast.makeText(getContext(), Double.toString(longitude) , Toast.LENGTH_SHORT).show();
+
+        coordinate = latitude + "," +longitude;
+        Toast.makeText(getContext(), coordinate , Toast.LENGTH_SHORT).show();
 
 
         rootView.findViewById(R.id.gameregister_date_change).setOnClickListener(new View.OnClickListener() {
@@ -142,7 +147,7 @@ public class GameRegisterFragment extends Fragment {
             json.addProperty("type", radio.getCheckedRadioButtonId() == R.id.radioButtonGR1);
             json.addProperty("court", URLEncoder.encode(address, "utf-8"));
             json.addProperty("player1", MainActivity.userID);
-
+            json.addProperty("gps", coordinate);
             SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSZ", Locale.getDefault());
             Date ndate;
             ndate = new Date(year-1900, month, day-30, hour, minute);
