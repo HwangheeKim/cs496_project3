@@ -38,10 +38,22 @@ public class MyParser {
 
     public static String getDate(String playtime) {
         // TODO : Implement this method
-        return "";
+        // 2017-01-10T15:00:00.000Z
+        char[] charDate = new char [10];
+        playtime.getChars(0, 10, charDate, 0);
+        String strDate = "";
+        strDate = new String(charDate, 0, charDate.length);
+
+        return strDate;
     }
 
     public static String getTime(String playtime) {
-        return "";
+
+        char[] charTime = new char [5];
+        playtime.getChars(11, 16, charTime, 0);
+        String strTime = "";
+        strTime = new String(charTime, 0, charTime.length);
+
+        return strTime;
     }
 }
